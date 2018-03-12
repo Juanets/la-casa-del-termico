@@ -11,7 +11,7 @@ git config --global user.email "Tu correo"
 ```
 Esto es para que se guarden sus datos de sesión en su PC.  
   
-Después correr (les pedirá contraseña; creo que será la única vez):
+Después correr (les pedirá contraseña, para arreglar ver [aquí](https://github.com/Juanets/la-casa-del-termico/blob/master/docs/GIT.md#c%C3%B3mo-guardar-tus-credenciales-para-que-git-deje-de-pedir-tu-contrase%C3%B1a)):
 
 ```
 git clone https://github.com/Juanets/la-casa-del-termico.git
