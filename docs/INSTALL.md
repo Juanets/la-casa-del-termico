@@ -1,6 +1,6 @@
 ## Instalación de cosas necesarias
 * [Python](https://www.python.org/downloads/release/python-364/)
-* [Git](https://git-scm.com/download/win)
+* [Git](https://gitforwindows.org/)
 * Editor de texto (VS Code, Sublime Text, el que sea)
 
 ## Bajar este repositorio a su PC
