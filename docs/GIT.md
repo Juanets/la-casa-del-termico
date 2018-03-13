@@ -51,8 +51,38 @@ Si quieren ver un ejempo/representación visual de commits, vean los commits que
   
 Pueden dar click en uno y ver qué cambios se hicieron. Por ejemplo [este](https://github.com/Juanets/la-casa-del-termico/commit/8e05f4b174fd59d759bdd166147aa8bf9aebf16a). Del lado izquierdo, en rojo, es como era antes. Del lado derecho aparecen los cambios en color verde.
 ### 4. [Push](#)
+Una vez listo el paquete (articulos pedidos, informacion de envio y cliente, etc) se envía al destino.  
+
+`git push` hace eso: se envían los commits (paquete de archivos y sus cambios) al repositorio remoto.  
+Recuerden que cada quien trabajará en su rama, por lo tanto **el push se deberá hacer a su rama**.
+```
+git push origin alan
+```
+El `origin` es el servidor de origen del repo; siempre será igual. Después ponen el nombre de la rama a la que van a *pushear*.
+Si llegaran hacer push a `master` simplemente sería:
+```
+git push origin master
+```
+Y así es como envían su trabajo al repositorio para que todos trabajemos en el mismo proyecto con los mismos avances.  
+
+---
+
+En ocasiones, Git dirá algo como "El repositorio remoto contiene cosas que tú no tienes localmente". Significa que tienen que tener la versión más reciente del repo para poder subir cambios. Esto es debido a que, si ustedes tienen archivos pasados con cambios viejos, y quieren *pushearlos* al repo, entonces se borraría la información más nueva del repositorio y se perdería todo.  
+  
+Para bajar la versión más reciente del repositorio se tiene que hacer `git pull`.  
 
 ### 5. [Pull](#)
+Este es fácil. Simplemente ponen el remoto y la rama.
+```
+git pull origin alan
+```
+Así se bajan los cambios que estén en el repositorio en la rama `alan`.  
+  
+Si quieren hacer pull desde la rama principal, entonces:
+```
+git pull origin master
+```
+Puede ser que surgan *conflictos de merge* (es muy raro, pero pasa). La terminal les dirá que en tal linea surgió un conflico y que lo arregles manualmente. Es algo confuso, pero si les pasa me pueden pedir ayuda. Si quieren arreglar dichos conflictos [aquí se explica cómo](https://github.com/oslugr/curso-git/blob/master/texto/solucion_problemas.md#resolviendo-conflictos).
 
 ## Comandos extra
 
