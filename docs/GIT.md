@@ -51,19 +51,70 @@ Si quieren ver un ejempo/representación visual de commits, vean los commits que
   
 Pueden dar click en uno y ver qué cambios se hicieron. Por ejemplo [este](https://github.com/Juanets/la-casa-del-termico/commit/8e05f4b174fd59d759bdd166147aa8bf9aebf16a). Del lado izquierdo, en rojo, es como era antes. Del lado derecho aparecen los cambios en color verde.
 ### 4. [Push](#)
+Una vez listo el paquete (articulos pedidos, informacion de envio y cliente, etc) se envía al destino.  
+
+`git push` hace eso: se envían los commits (paquete de archivos y sus cambios) al repositorio remoto.  
+Recuerden que cada quien trabajará en su rama, por lo tanto **el push se deberá hacer a su rama**.
+```
+git push origin alan
+```
+El `origin` es el servidor de origen del repo; siempre será igual. Después ponen el nombre de la rama a la que van a *pushear*.
+Si llegaran hacer push a `master` simplemente sería:
+```
+git push origin master
+```
+Y así es como envían su trabajo al repositorio para que todos trabajemos en el mismo proyecto con los mismos avances.  
+
+---
+
+En ocasiones, Git dirá algo como "El repositorio remoto contiene cosas que tú no tienes localmente". Significa que tienen que tener la versión más reciente del repo para poder subir cambios. Esto es debido a que, si ustedes tienen archivos pasados con cambios viejos, y quieren *pushearlos* al repo, entonces se borraría la información más nueva del repositorio y se perdería todo.  
+  
+Para bajar la versión más reciente del repositorio se tiene que hacer `git pull`.  
 
 ### 5. [Pull](#)
+Este es fácil. Simplemente ponen el remoto y la rama.
+```
+git pull origin alan
+```
+Así se bajan los cambios que estén en el repositorio en la rama `alan`.  
+  
+Si quieren hacer pull desde la rama principal, entonces:
+```
+git pull origin master
+```
+Puede ser que surgan *conflictos de merge* (es muy raro, pero pasa). La terminal les dirá que en tal linea surgió un conflico y que lo arregles manualmente. Es algo confuso, pero si les pasa me pueden pedir ayuda. Si quieren arreglar dichos conflictos [aquí se explica cómo](https://github.com/oslugr/curso-git/blob/master/texto/solucion_problemas.md#resolviendo-conflictos).
 
 ## Comandos extra
 
 ### 1. [Status](#)
-
+Esto sirve para ver el estado del repositorio localmente. Es decir, los archivos que modificaste y **que no has agregado/commiteado**, entre otras cosas como ver la rama actual.
+```
+git status
+```
+Los archivos modificados cuyos cambios no has registrado (usando `git add`) aparecerán en rojo; los cambios que ya registraste, en verde.
 ### 2. [Init](#)
-
+Cuando quieran crear su propio repositorio de Git (GitHub no, Git), se utiliza `init`.
+```
+git init .
+```
+Normalemente, después de esto se *linkea* el repositorio que acaban de crear localmente con un remoto de GitHub.  
+Se van a GitHub, crean un repositorio vacío, copian la URL que les da y hacen:
+```
+git remote add origin <URL>
+```
+Y listo, sus archivos locales están "sincronizados" en un repositorio de GitHub, y ya pueden empezar a trabajar utilizando `git add`, `git commit` y `git push`.  
+  
+Esto no se usará en este proyecto porque ya está creado, pero les será útil para otros proyectos que hagan.
 ### 3. [Clone](#)
-
-## Cómo guardar tus credenciales para que Git deje de pedir tu contraseña
-Como el proyecto está privado, cada acción que hagan (clone, pull, push) requerirá de su contraseña. 
+Si ya existe un repositorio en GitHub y quieren copiarlo a su PC, utilicen `clone`:
+```
+git clone <link del repositorio>
+```
+Esto copia los archivos del repositorio.  
+    
+**Tip**: puede ser *cualquier* repo, recuerden que lo que está en GitHub es código abierto y pueden contribuir a otros repositorios.
+## Cómo guardar contraseña localmente
+Como este repositorio está privado, cada acción que hagan (clone, pull, push) requerirá de su contraseña. 
 Sus credenciales (usuario y contraseña) se pueden guardar localmente para que Git ya no enfade.
 ```
 git config credential.helper store
