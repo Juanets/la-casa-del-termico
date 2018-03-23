@@ -8,11 +8,19 @@ small {
 /* icons */
 
 .fa-edit {
-  color: #43A047;
+  color: #66BB6A;
 }
 
 .fa-trash-alt {
   color: #E53935;
+}
+
+.fa-user {
+  color: #007bff;
+}
+
+.fa-map {
+  color: #FB8C00;
 }
 
 /* bootstrap-select */

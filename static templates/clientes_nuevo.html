@@ -1,167 +1,212 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="bootstrap4-select.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 
     <title>La Casa del Térmico</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
-      <a class="navbar-brand" href="#">La Casa del Térmico</a>
+</head>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Clientes
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Buscar</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Nuevo cliente</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Choferes
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Buscar</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Nuevo chofer</a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Reportes</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#">Nueva ruta</a>
-          </li>          
-        </ul>
-      </div>
-      
-      <span class="navbar-text">
-          <a class="nav-link" href="#">Salir</a>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+        <a class="navbar-brand" href="#">La Casa del Térmico</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        Clientes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Buscar</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Nuevo cliente</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        Choferes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Buscar</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Nuevo chofer</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Reportes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Nueva ruta</a>
+                </li>
+            </ul>
+        </div>
+
+        <span class="navbar-text">
+            <a class="nav-link" href="#">Salir</a>
         </span>
     </nav>
 
 
     <div class="container">
         <div class="row mb-3">
-            <div class="col m-0">   
+            <div class="col m-0">
                 <h2 class="mb-0">
                     Clientes
                     <small class="text-muted">Nuevo</small>
                 </h2>
             </div>
         </div>
-        
+
         <div class="row">
             <form action="">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Nombre</span>
-                </div>                
-                <input type="text" class="form-control" placeholder="" aria-label="Nombre">
-            </div>
+                <div class="form-row">
+                    <h5 class="text-muted mt-2 ml-1">Información de contacto</h5>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Nombre</span>
+                    </div>
+                    <input type="text" class="form-control" id="Nombre" placeholder="" aria-label="Nombre">
+                </div>
 
-            <div class="form-row">
-                <div class="col-md-6">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Correo&nbsp;&nbsp;</span>
-                        </div>                        
-                        <input type="text" class="form-control" aria-label="Correo">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Teléfono</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Tel">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Correo&nbsp;&nbsp;</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Opcional" aria-label="Correo">
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Teléfono</span>
-                        </div>                        
-                        <input type="text" class="form-control" aria-label="Tel">
+                <div class="form-row">
+                    <h5 class="text-muted mt-2 ml-1">Dirección</h5>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Colonia&nbsp;</span>
+                            </div>
+                            <input type="text" class="form-control" id="Colonia" aria-label="Colonia">
+                        </div>
                     </div>
-                </div>                               
+                    <div class="col-sm-12 col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Calle</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Calle">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Número</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Número">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">C.P.</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Opcional" aria-label="CP">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <h5 class="text-muted mt-2 ml-1">Ubicación
+                        <small>
+                            <a href="#" class="btn-link" data-toggle="modal" data-target="#coordinatesModal">
+                                ¿Qué?
+                            </a>
+                        </small>
+                    </h5>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Latitud&nbsp;&nbsp;</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Correo">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text pr-2">Longitud</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Tel">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text pr-2">Zona</span>
+                            </div>
+                            <select class="custom-select">
+                                <option selected disabled>Seleccionar</option>
+                                <option value="1">Norte</option>
+                                <option value="2">Sur</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-primary w-100">Enviar</button>
+            </form>
+        </div>
+        <div class="modal fade" id="coordinatesModal" tabindex="-1" role="dialog" aria-labelledby="coordinatesModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title " id="exampleModalLabel"><strong>Coordenadas del cliente</strong></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Utilizamos las coordenadas de ubicación del cliente para mayor exactitud,
+                        ya que en ocaciones <i>Google Maps</i> no encuentra la dirección en forma de texto.
+                        <br><br>
+                        <strong>Ejemplo:</strong> <br>
+                        <i>Latitud:</i> 29.0672479 <br>
+                        <i>Longitud:</i> -110.960755
+                        <br><br>
+                        Para saber cómo obtener las coordenadas, haz click <a target="_blank" href="https://support.google.com/maps/answer/18539?hl=es">aquí</a>.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-outline-primary">Ok</button>
+                    </div>
+                </div>
             </div>
-            <div class="form-row">
-                <div class="co-sm-12 col-md-3">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Colonia&nbsp;</span>
-                        </div>                        
-                        <input type="text" class="form-control" aria-label="Colonia">
-                    </div>
-                </div>
-                <div class="co-sm-12 col-md-3">
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Calle</span>
-                        </div>                        
-                        <input type="text" class="form-control" aria-label="Calle">
-                    </div>
-                </div>
-                <div class="co-sm-12 col-md-3">
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Número</span>
-                        </div>                        
-                        <input type="text" class="form-control" aria-label="Número">
-                    </div>
-                </div>
-                <div class="co-sm-12 col-md-3">
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">C.P.</span>
-                        </div>                        
-                        <input type="text" class="form-control" aria-label="CP">
-                    </div>
-                </div>                                              
-            </div>            
-            <div class="form-row">
-                <div class="col-md-4">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Latitud&nbsp;&nbsp;</span>
-                        </div>                        
-                        <input type="text" placeholder="Opcional" class="form-control" aria-label="Correo">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text pr-2">Longitud</span>
-                        </div>                        
-                        <input type="text" placeholder="Opcional" class="form-control" aria-label="Tel">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text pr-2">Zona</span>
-                        </div>                        
-                        <select class="custom-select">
-                            <option selected disabled>Seleccionar</option>
-                            <option value="1">Norte</option>
-                            <option value="2">Centro</option>
-                            <option value="3">Sur</option>
-                          </select>
-                    </div>
-                </div>                                           
-            </div>
-            <button type="button" class="btn btn-outline-primary w-100">Enviar</button>            
-            </form>        
         </div>
     </div>
 
@@ -171,6 +216,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-    
-  </body>
+
+</body>
+
 </html>
