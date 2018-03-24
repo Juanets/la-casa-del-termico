@@ -26,3 +26,8 @@ def calc_page_range(page, num_pages):
 
     page_range = [i for i in range(start, end+1)]
     return page_range
+
+def clientes_ver(request, id):
+    cliente = Cliente.objects.get(id=id)
+    print(cliente)
+    return render(request, 'clientes_ver.html', {'c': cliente})
