@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block css %}
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> 
+{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col m-0">
+        <h2 class="mb-0">
+            Clientes
+            <small class="text-muted">Perfil</small>
+        </h2>
+    </div>
+</div>
+
+<div class="card">
+    <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo&q={{ c.lat}},{{ c.lng }}" class="card-img-top" frameborder="0" style="border:0" height=250></iframe>
+
+    <div class="card-body">
+        <h5 class="card-title">
+            <strong>{{ c.nombre|title }}</strong>&emsp;
+            <i class="fas fa-edit"></i>&emsp;
+            <i class="far fa-trash-alt"></i>
+        </h5>
+        <p class="card-text">
+            <strong>Dirección:</strong>
+            {{ c.calle|add:" "|add:c.colonia|add:" num. int. "|add:c.numero_int|add:" num. ext. "|add:c.numero_ext|title }}
+        </p>
+        {% if c.telefono %}
+            <p class="card-text">
+                <strong>Teléfono: </strong>{{ c.telefono }}
+            </p>
+        {% endif %}
+        {% if c.correo %}
+            <p class="card-text">
+                <strong>Correo: </strong>{{ c.correo }}
+            </p>
+        {% endif %}
+        <a target="_blank" href="https://www.google.com/maps?q={{ c.lat }},{{ c.lng }}" class="btn btn-outline-primary">Ver en Maps</a>
+    </div>
+</div>
+{% endblock %}
