@@ -36,8 +36,8 @@
                 <td>{{ c.telefono }}</td>
                 <td>{{ c.correo }}</td>
                 <td>
-                    <i class="far fa-user"></i>&emsp;
-                    <i class="far fa-map"></i>&emsp;
+                    <a href="/clientes/{{ c.id }}"><i class="far fa-user"></i></a>&emsp;
+                    <a href="https://www.google.com/maps?q={{ c.lat }},{{ c.lng }}"><i class="far fa-map"></i></a>&emsp;
                     <i class="fas fa-edit"></i>&emsp;
                     <i class="far fa-trash-alt"></i>
                 </td>
