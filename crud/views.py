@@ -1,6 +1,7 @@
 from crud.models import Cliente
+from crud.forms import ClienteForm
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from watson import search as watson
 
@@ -34,7 +35,7 @@ def calc_page_range(page, num_pages):
 
 def clientes_ver(request, id):
     cliente = Cliente.objects.get(id=id)
-    print(cliente)
+
     return render(request, 'clientes_ver.html', {'c': cliente})
 
 def clientes_buscar_handler(request):
@@ -59,3 +60,37 @@ def clientes_buscar(request, query):
     page_range = calc_page_range(int(page), p.num_pages)
     print(type(p.num_pages))
     return render(request, 'clientes_lista.html', {'clientes': p.get_page(page), 'paginator': p, 'page_range': page_range, 'query': query})
+
+def clientes_nuevo(request):
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            nuevo = Cliente()
+            nuevo.nombre = form.cleaned_data['nombre']
+            nuevo.telefono = form.cleaned_data['telefono']
+            nuevo.colonia = form.cleaned_data['colonia']
+            nuevo.calle = form.cleaned_data['calle']
+            nuevo.numero_int = form.cleaned_data['numero_int']
+            nuevo.numero_ext = form.cleaned_data['numero_ext']
+            nuevo.cp = form.cleaned_data['cp']
+            nuevo.lat = form.cleaned_data['lat']
+            nuevo.lng = form.cleaned_data['lng']
+            if form.cleaned_data['zona'] == 1:
+                nuevo.zona = 'Norte'
+            else:
+                nuevo.zona = 'Sur'
+            if form.cleaned_data['correo']:
+                nuevo.correo = form.cleaned_data['correo']
+            else:
+                nuevo.correo = 'Sin correo'                
+
+            nuevo.save()
+
+            success = '''Cliente <i>{cliente}</i> creado con éxito. <a href="/clientes/nuevo" 
+            class="alert-link">¿Crear otro?</a>'''.format(cliente=nuevo.nombre)
+
+            return render(request, 'clientes_ver.html', {'c': nuevo, 'messages': success})
+            
+    else:
+        form = ClienteForm()      
+        return render(request, 'clientes_nuevo.html', {'form': form})
