@@ -2,6 +2,7 @@ certifi==2018.1.18
 chardet==3.0.4
 Django==2.0.3
 django-watson==1.5.2
+django-widget-tweaks==1.4.2
 googlemaps==2.5.1
 idna==2.6
 pytz==2018.3
