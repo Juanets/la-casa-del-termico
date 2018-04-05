@@ -94,3 +94,36 @@ def clientes_nuevo(request):
     else:
         form = ClienteForm()      
         return render(request, 'clientes_nuevo.html', {'form': form})
+
+def clientes_editar(request, id):
+    cliente = Cliente.objects.get(id=id)    
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            cliente.nombre = form.cleaned_data['nombre']
+            cliente.telefono = form.cleaned_data['telefono']
+            cliente.colonia = form.cleaned_data['colonia']
+            cliente.calle = form.cleaned_data['calle']
+            cliente.numero_int = form.cleaned_data['numero_int']
+            cliente.numero_ext = form.cleaned_data['numero_ext']
+            cliente.cp = form.cleaned_data['cp']
+            cliente.lat = form.cleaned_data['lat']
+            cliente.lng = form.cleaned_data['lng']
+            if form.cleaned_data['zona'] == 1:
+                cliente.zona = 'Norte'
+            else:
+                cliente.zona = 'Sur'
+            if form.cleaned_data['correo']:
+                cliente.correo = form.cleaned_data['correo']
+            else:
+                cliente.correo = 'Sin correo'                
+
+            cliente.save()
+
+            success = 'Cliente <i>{cliente}</i> editado con éxito'.format(cliente=cliente.nombre)
+
+            return render(request, 'clientes_ver.html', {'c': cliente, 'messages': success})
+            
+    else:
+        form = ClienteForm(initial=cliente.__dict__)
+        return render(request, 'clientes_editar.html', {'form': form, 'c': cliente})

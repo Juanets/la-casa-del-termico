@@ -7,4 +7,5 @@ urlpatterns = [
     path('clientes/buscar_handler/', views.clientes_buscar_handler, name='clientes_buscar_handler'),        
     path('clientes/buscar/<str:query>/', views.clientes_buscar, name='clientes_buscar'),
     path('clientes/nuevo/', views.clientes_nuevo, name='clientes_nuevo'),
+    path('clientes/editar/<int:id>/', views.clientes_editar, name='clientes_editar'),    
 ]
