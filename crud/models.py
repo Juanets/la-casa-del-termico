@@ -7,6 +7,7 @@ class Cliente(models.Model):
     telefono = models.CharField(blank=True, max_length=50)
     colonia = models.CharField(max_length=50)
     calle = models.CharField(max_length=50)
+    cp = models.CharField(blank=True, max_length=5)
     numero_int = models.CharField(blank=True, max_length=20)
     numero_ext = models.CharField(blank=True, max_length=20)
     lat = models.CharField(max_length=20)
