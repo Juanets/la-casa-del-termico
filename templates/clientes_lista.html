@@ -21,7 +21,9 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Dirección</th>
+                <th scope="col">Calle</th>
+                <th scope="col">Calle</th>
+                <th scope="col">CP</th>                                
                 <th scope="col">Teléfono</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Acciones</th>
@@ -31,14 +33,16 @@
             {% for c in clientes %}
             <tr>
                 <th scope="row">{{ c.id }}</th>
-                <td>{{ c.nombre|title|truncatechars:30 }}</td>
-                <td>{{ c.calle|add:" "|add:c.colonia|add:" "|add:c.numero_int|add:" "|add:c.numero_ext|title|truncatechars:30 }}</td>
-                <td>{{ c.telefono }}</td>
+                <td>{{ c.nombre|title|truncatechars:25 }}</td>
+                <td>{{ c.calle|add:" "|add:c.numero_int|add:" "|add:c.numero_ext|title|truncatechars:30 }}</td>
+                <td>{{ c.colonia|title }}</td>
+                <td>{{ c.cp }}</td>
+                <td>{{ c.telefono|truncatechars:10 }}</td>
                 <td>{{ c.correo }}</td>
                 <td>
                     <a href="/clientes/{{ c.id }}"><i class="far fa-user"></i></a>&emsp;
                     <a href="https://www.google.com/maps?q={{ c.lat }},{{ c.lng }}"><i class="far fa-map"></i></a>&emsp;
-                    <i class="fas fa-edit"></i>&emsp;
+                    <a href="/clientes/editar/{{ c.id }}"><i class="fas fa-edit"></i></a>&emsp;
                     <i class="far fa-trash-alt"></i>
                 </td>
             </tr>
