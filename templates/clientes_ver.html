@@ -14,6 +14,15 @@
     </div>
 </div>
 
+{% if messages %}
+    <div class="alert alert-success" role="alert">
+        {{ messages|safe }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endif %}
+
 <div class="card">
     <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo&q={{ c.lat}},{{ c.lng }}" class="card-img-top" frameborder="0" style="border:0" height=250></iframe>
 
