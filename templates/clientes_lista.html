@@ -43,9 +43,34 @@
                     <a href="/clientes/{{ c.id }}"><i class="far fa-user"></i></a>&emsp;
                     <a href="https://www.google.com/maps?q={{ c.lat }},{{ c.lng }}"><i class="far fa-map"></i></a>&emsp;
                     <a href="/clientes/editar/{{ c.id }}"><i class="fas fa-edit"></i></a>&emsp;
-                    <i class="far fa-trash-alt"></i>
+                    <a  href="#" data-toggle="modal" data-target="#modal_borrar_{{ c.id }}"><i class="far fa-trash-alt"></i></a>
                 </td>
             </tr>
+
+            <div class="modal fade" id="modal_borrar_{{ c.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_borrar_{{ c.id }}Label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title " id="modal_borrar_{{ c.id }}Label">Borrar cliente</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Se <strong class="text-danger">eliminará</strong> al cliente
+                            <strong>{{ c.nombre|title }}</strong>.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                            <form action="/clientes/borrar/{{ c.id }}/" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger">Borrar</button>                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {% endfor %}
         </tbody>
     </table>
