@@ -84,8 +84,14 @@
             <ul class="pagination">
                 {% if clientes.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?p={{ clientes.previous_page_number }}">
+                        <a class="page-link" href="/clientes/">
                             <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Atrás</span>
+                        </a>
+                    </li>                
+                    <li class="page-item">
+                        <a class="page-link" href="?p={{ clientes.previous_page_number }}">
+                            <span aria-hidden="true">&lsaquo;</span>
                             <span class="sr-only">Atrás</span>
                         </a>
                     </li>
@@ -105,6 +111,12 @@
                 {% if clientes.has_next %}
                     <li class="page-item">
                         <a class="page-link" href="?p={{ clientes.next_page_number }}">
+                            <span aria-hidden="true">&rsaquo;</span>
+                            <span class="sr-only">Siguiente</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?p={{ paginator.num_pages }}">
                             <span aria-hidden="true">&raquo;</span>
                             <span class="sr-only">Siguiente</span>
                         </a>
