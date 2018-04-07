@@ -1,10 +1,5 @@
-{% extends 'base.html' %}
-
-{% block css %}
-    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> 
-{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block css %}
+<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> {% endblock %} {% block content %}
 <div class="row mb-3">
     <div class="col m-0">
         <h2 class="mb-0">
@@ -15,38 +10,87 @@
 </div>
 
 {% if messages %}
-    <div class="alert alert-success" role="alert">
-        {{ messages|safe }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+<div class="alert alert-success" role="alert">
+    {{ messages|safe }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 {% endif %}
 
 <div class="card">
-    <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo&q={{ c.lat}},{{ c.lng }}" class="card-img-top" frameborder="0" style="border:0" height=250></iframe>
+    <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo&q={{ c.lat }},{{ c.lng }}"
+        class="card-img-top" frameborder="0" style="border:0" height=250></iframe>
 
     <div class="card-body">
         <h5 class="card-title">
             <strong>{{ c.nombre|title }}</strong>&emsp;
-            <a href="/clientes/editar/{{ c.id }}"><i class="fas fa-edit"></i></a>&emsp;
-            <i class="far fa-trash-alt"></i>
+            <a href="/clientes/editar/{{ c.id }}">
+                <i class="fas fa-edit"></i>
+            </a>&emsp;
+            <a  href="#" data-toggle="modal" data-target="#modal_borrar">
+                <i class="far fa-trash-alt"></i>
+            </a>
         </h5>
         <p class="card-text">
-            <strong>Dirección:</strong>
-            {{ c.calle|add:" "|add:c.colonia|add:" num. int. "|add:c.numero_int|add:" num. ext. "|add:c.numero_ext|title }}
+            <strong>Calle:</strong>
+            {{ c.calle|title }}
+        </p>
+        <p class="card-text">
+            <strong>Colonia:</strong>
+            {{ c.colonia|title }}
+        </p>
+        {% if c.numero_int %}
+        <p class="card-text">
+            <strong>Número interior:</strong>
+            {{ c.numero_int }}
+        </p>
+        {% endif %}
+        <p class="card-text">
+            {% if c.numero_ext %}
+            <strong>Número exterior:</strong>
+            {{ c.numero_ext }}
+        </p>
+        {% endif %}
+        <p class="card-text">
+            <strong>Zona:</strong>
+            {{ c.zona }}
         </p>
         {% if c.telefono %}
-            <p class="card-text">
-                <strong>Teléfono: </strong>{{ c.telefono }}
-            </p>
-        {% endif %}
-        {% if c.correo %}
-            <p class="card-text">
-                <strong>Correo: </strong>{{ c.correo }}
-            </p>
+        <p class="card-text">
+            <strong>Teléfono: </strong>{{ c.telefono }}
+        </p>
+        {% endif %} {% if c.correo %}
+        <p class="card-text">
+            <strong>Correo: </strong>{{ c.correo }}
+        </p>
         {% endif %}
         <a target="_blank" href="https://www.google.com/maps?q={{ c.lat }},{{ c.lng }}" class="btn btn-outline-primary">Ver en Maps</a>
     </div>
 </div>
+
+<div class="modal fade" id="modal_borrar" tabindex="-1" role="dialog" aria-labelledby="modal_borrarLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title " id="modal_borrarLabel">Borrar cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Se <strong class="text-danger">eliminará</strong> al cliente
+                <strong>{{ c.nombre|title }}</strong>.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                <form action="/clientes/borrar/{{ c.id }}/" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger">Borrar</button>                
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
