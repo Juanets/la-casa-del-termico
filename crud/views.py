@@ -127,3 +127,11 @@ def clientes_editar(request, id):
     else:
         form = ClienteForm(initial=cliente.__dict__)
         return render(request, 'clientes_editar.html', {'form': form, 'c': cliente})
+
+def clientes_borrar(request, id):
+    if request.method == 'POST':
+        cliente = Cliente.objects.get(id=id)
+        cliente.delete()
+        return redirect(clientes_lista)
+    else:
+        return redirect(clientes_ver, id=id)
