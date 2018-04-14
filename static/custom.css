@@ -1,5 +1,9 @@
 /* general */
 
+  .hide {
+    display: none !important;
+  }
+  
   small {
       font-size: 60%;
       font-weight: 200;
@@ -12,8 +16,27 @@
 
   .a-clean:hover {
     color: #007bff !important;
-  
   }
+
+  .waypoint-number {
+    background-color: #007bff !important;
+    color: #fff;
+    border: none !important;
+  }
+
+  /* collapse */
+  a[data-toggle="collapse"]{
+    -webkit-transition: color 700ms; /* Safari */
+    transition: color 700ms;    
+  }
+
+  a[aria-expanded="true"]{
+    background-color: #007bff !important;
+    color: #fff !important;
+    -webkit-transition: background-color 500ms; /* Safari */
+    transition: background-color 500ms;
+  }
+
   /* icons */
   
   .fa-edit {
@@ -34,6 +57,10 @@
   
   /* bootstrap-select */
   
+  .bootstrap-select.form-control:not([class*="col-"]) {
+    width: 0 !important;
+  }
+
   .bootstrap-select.show>.dropdown-menu>.dropdown-menu {
     display: block;
   }
@@ -58,8 +85,16 @@
   .bootstrap-select button {
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #6c757d !important;
+    background-color: transparent;
+    background-image: none;
+    border-color: #ced4da !important;    
   }
-  
+
+  .no-background {
+    background-color: #fff !important;
+  }
+
   .bootstrap-select.btn-group .dropdown-toggle .filter-option {
     display: inline !important;
   }
