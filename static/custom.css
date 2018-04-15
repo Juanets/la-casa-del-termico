@@ -24,7 +24,12 @@
     border: none !important;
   }
 
+  .list-group-item {
+    padding: .75rem !important;
+  }
+  
   /* collapse */
+
   a[data-toggle="collapse"]{
     -webkit-transition: color 700ms; /* Safari */
     transition: color 700ms;    
