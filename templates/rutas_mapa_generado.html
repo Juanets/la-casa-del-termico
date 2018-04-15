@@ -1,10 +1,8 @@
 {% extends 'base.html' %} {% load i18n %} {% block content %}
-<form action="#" method="POST">
+<form action="/rutas/guardar/" target="_blank" method="POST">
+    {% csrf_token %}
+    <input type="hidden" value="{{ fecha }}" name="fecha" />
     <div class="row">
-        <div class="cosl-sm-4">
-
-        </div>
-
         <div class="col-sm-8">
             <h2 class="">
                 Nueva ruta
@@ -21,6 +19,7 @@
                     <ul class="list-group text-center">
                         <button type="button" class="lead list-group-item list-group-item-action">
                             ⏱ ️{{ route.duration }}
+                            <input type="hidden" value="{{ route.duration }}" name="duracion" />
                         </button>
                     </ul>
                 </div>
@@ -28,6 +27,7 @@
                     <ul class="list-group text-center">
                         <button type="button" class="lead list-group-item list-group-item-action">
                             🚘 {{ route.distance }}
+                            <input type="hidden" value="{{ route.distance }}" name="distancia" />
                         </button>
                     </ul>
                 </div>
@@ -41,7 +41,7 @@
                     id="clientList">
                     {% for c in clientes %}
                     <a href="/clientes/{{ c.id }}/" target="_blank" class="list-group-item list-group-item-action">
-                        {{ c.nombre|title|truncatechars:40 }}
+                        <input type="hidden" value="{{ c.id }}" name="ids" /> {{ c.nombre|title|truncatechars:40 }}
                     </a>
                     {% endfor %}
                 </div>
@@ -51,32 +51,25 @@
             <h2>
                 <small class="text-muted">Asignar chofer</small>
             </h2>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                <label class="custom-control-label" for="customRadio1">Alan Lerma</label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                <label class="custom-control-label" for="customRadio2">Eduardo Romo</label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-                <label class="custom-control-label" for="customRadio3">Fernando Félix</label>
-            </div>
+            {% for chofer in choferes %}
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="chofer{{ chofer.id }}" name="chofer" value="{{ chofer.id }}" class="custom-control-input" required>
+                    <label class="custom-control-label" for="chofer{{ chofer.id }}">{{ chofer.nombre }}</label>
+                </div>            
+            {% endfor %}
             <hr>
 
             <button type="button" data-toggle="modal" data-target="#newRoute" class="btn btn-outline-danger w-100 m-1">
                 Generar otra ruta
             </button>
-            <button type="button" data-toggle="tooltip" data-placement="bottom" title="Guardar reporte y salir" class="btn btn-outline-success w-100 m-1">
+            <button type="submit" data-toggle="tooltip" data-placement="bottom" title="Guardar reporte y salir" class="btn btn-outline-success w-100 m-1">
                 Finalizar
             </button>
         </div>
     </div>
 </form>
 
-<div class="modal fade" id="newRoute" tabindex="-1" role="dialog" aria-labelledby="newRoute"
-    aria-hidden="true">
+<div class="modal fade" id="newRoute" tabindex="-1" role="dialog" aria-labelledby="newRoute" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -101,18 +94,15 @@
         </div>
     </div>
 </div>
-{% endblock %} 
+{% endblock %} {% block scripts %}
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            delay: {
+                show: 200,
+                hide: 50,
+            }
 
-{% block scripts %}
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip({
-                delay: {
-                    show: 200,
-                    hide: 50,
-                }
-
-            })
         })
-    </script>
-{% endblock %}
+    })
+</script> {% endblock %}
