@@ -55,3 +55,9 @@ Sistema de generación de rutas óptimas para La Casa del Térmico.
   * Agregar el logo de la empresa
 * Hacer vista para mostrar el reporte como HTML en la URL `/reportes/<id>/`
   * Aquí se debe mostrar lo mismo de `templates/rutas_mapa_generado.html` pero sin los botones
+* Hacer la vista con el listado de todos los reportes
+  * Poner en la URL `/reportes/`
+  * Basarse en `static templates/reportes.html` y `templates/clientes_lista.html` para el HTML
+  * Basarse en la función `clientes_lista` de `crud/views.py` para el código
+* Lo mismo de arriba pero para un chofer en específico
+  * Poner en la URL `/reportes/?chofer=<chofer>/'
