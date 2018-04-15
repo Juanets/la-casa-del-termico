@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from easy_pdf.rendering import render_to_pdf_response
+import datetime
 
-from crud.models import Cliente
+from crud.models import Cliente, Chofer
+from rutas.models import Reporte, DeliveringOrder
 from .route_helper_functions import *
 
 def generar_ruta(request):
@@ -93,7 +96,16 @@ def generar_ruta(request):
                         '&waypoints={wp}'.format(wp='|'.join(final_coordinates))
                     )
 
-        return render(request, 'rutas_mapa_generado.html', {'iframe_url': iframe_url, 'clientes': client_objs, 'route': final_route_data})
+        # obtener lista de choferes existentes
+        choferes = Chofer.objects.all()
+        return render(request,'rutas_mapa_generado.html', {
+                                                    'iframe_url': iframe_url,
+                                                    'clientes': client_objs,
+                                                    'route': final_route_data,
+                                                    'choferes': choferes,
+                                                    'fecha': datetime.datetime.now()
+                                                }
+                                            )
 
 def asdf(request):
     c = Cliente.objects.all()
@@ -101,18 +113,43 @@ def asdf(request):
     return render(request, 'asdf.html', {'c':c, 'range': range(1, 24)})
 
 
-from django.conf import settings
-from easy_pdf.views import PDFTemplateView
+def guardar_ruta(request):
+    if request.method == 'POST':
+        fecha = datetime.datetime.now()
+        clientes = get_clients_by_order(request.POST.getlist('ids'))
+        chofer = Chofer.objects.get(id=request.POST.get('chofer'))
+        duracion = request.POST.get('duracion')
+        distancia = request.POST.get('distancia')
+        r = Reporte(fecha=fecha, chofer=chofer, duracion=duracion, distancia=distancia)
+        r.save()
+        
+        # guardar clientes en orden de entrega
+        for i, c in enumerate(clientes):
+            DeliveringOrder.objects.create(r=r, c=c, number=i)
+        
+        r.save()
+        
+        # una vez guardada la ruta, mostrar el reporte en una nueva pestaña
+        return redirect(pdf, id=r.id)
 
-class HelloPDFView(PDFTemplateView):
-    template_name = 'pdf.html'
 
-    # base_url = 'file://' + settings.STATIC_ROOT
-    download_filename = 'hello.pdf'
+def pdf(request, id):
+    # obtener el reporte que se quiere ver 
+    r = Reporte.objects.get(id=id)
+    context = r.__dict__
 
-    def get_context_data(self, **kwargs):
-        return super(HelloPDFView, self).get_context_data(
-            pagesize='A4',
-            title='Hi there!',
-            **kwargs
-        )
+    # obtener clientes y chofer de la entrega
+    context['clientes'] = r.clientes.all()
+    context['chofer'] = r.chofer.nombre
+
+    # plantilla HTML que se transformará a PDF
+    template = 'pdf.html'
+
+    # nombre del PDF cuando se descargue
+    download_filename = '{fecha}.html'.format(fecha=context['fecha'])
+
+    # abrir el PDF generado en una nueva pestaña dentro del navegador
+    return render_to_pdf_response(request=request, 
+                                template=template, 
+                                context=context, 
+                                download_filename=download_filename)
