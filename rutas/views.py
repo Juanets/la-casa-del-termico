@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from easy_pdf.rendering import render_to_pdf_response
 import datetime
+import time
 
 from crud.models import Cliente, Chofer
 from rutas.models import Reporte, DeliveringOrder
@@ -120,7 +121,16 @@ def guardar_ruta(request):
         chofer = Chofer.objects.get(id=request.POST.get('chofer'))
         duracion = request.POST.get('duracion')
         distancia = request.POST.get('distancia')
-        r = Reporte(fecha=fecha, chofer=chofer, duracion=duracion, distancia=distancia)
+        mapa_url = request.POST.get('iframe_url')
+
+        r = Reporte(
+                    fecha=fecha,
+                    chofer=chofer,
+                    duracion=duracion,
+                    distancia=distancia,
+                    mapa_url=mapa_url,
+                )
+
         r.save()
         
         # guardar clientes en orden de entrega
@@ -128,12 +138,18 @@ def guardar_ruta(request):
             DeliveringOrder.objects.create(r=r, c=c, number=i)
         
         r.save()
-        
+
         # una vez guardada la ruta, mostrar el reporte en una nueva pestaña
-        return redirect(pdf, id=r.id)
+        return redirect(reporte_ver, id=r.id)
 
 
-def pdf(request, id):
+def reporte_ver(request, id):
+    reporte = Reporte.objects.get(id=id)
+    clientes = reporte.clientes.all()
+
+    return render(request, 'reporte_ver.html', {'reporte': reporte, 'clientes': clientes})
+
+def reporte_pdf(request, id, fecha):
     # obtener el reporte que se quiere ver 
     r = Reporte.objects.get(id=id)
     context = r.__dict__
@@ -144,12 +160,10 @@ def pdf(request, id):
 
     # plantilla HTML que se transformará a PDF
     template = 'pdf.html'
-
-    # nombre del PDF cuando se descargue
-    download_filename = '{fecha}.html'.format(fecha=context['fecha'])
-
+    
     # abrir el PDF generado en una nueva pestaña dentro del navegador
-    return render_to_pdf_response(request=request, 
+    return render_to_pdf_response(
+                                request=request, 
                                 template=template, 
-                                context=context, 
-                                download_filename=download_filename)
+                                context=context
+                            )
