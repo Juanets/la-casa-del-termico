@@ -108,10 +108,10 @@ def generar_ruta(request):
                                                 }
                                             )
 
-def asdf(request):
+def escoger_clientes(request):
     c = Cliente.objects.all()
 
-    return render(request, 'asdf.html', {'c':c, 'range': range(1, 24)})
+    return render(request, 'rutas_escoger_clientes.html', {'c':c, 'range': range(1, 24)})
 
 
 def guardar_ruta(request):
