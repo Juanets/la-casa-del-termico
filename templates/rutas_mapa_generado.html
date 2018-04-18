@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% load i18n %} {% block content %}
-<form action="/rutas/guardar/" target="_blank" method="POST">
+<form action="/rutas/guardar/" method="POST">
     {% csrf_token %}
     <input type="hidden" value="{{ fecha }}" name="fecha" />
     <div class="row">
@@ -9,6 +9,7 @@
                 <small class="text-muted">Resultado</small>
             </h2>
             <iframe src="{{ iframe_url }}" class="w-100" height="500px" frameborder="0" style="border:0" allowfullscreen></iframe>
+            <input type="hidden" value="{{ iframe_url }}" name="iframe_url">
         </div>
         <div class="col-sm-4">
             <h2 class="">
@@ -59,10 +60,10 @@
             {% endfor %}
             <hr>
 
-            <button type="button" data-toggle="modal" data-target="#newRoute" class="btn btn-outline-danger w-100 m-1">
+            <button type="button" data-toggle="modal" data-target="#newRoute" class="btn btn-outline-danger w-100 mb-3">
                 Generar otra ruta
             </button>
-            <button type="submit" data-toggle="tooltip" data-placement="bottom" title="Guardar reporte y salir" class="btn btn-outline-success w-100 m-1">
+            <button type="submit" data-toggle="tooltip" data-placement="bottom" title="Guardar reporte y salir" class="btn btn-outline-success mb-3 w-100">
                 Finalizar
             </button>
         </div>
