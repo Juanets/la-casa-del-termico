@@ -53,8 +53,7 @@ Sistema de generación de rutas óptimas para La Casa del Térmico.
     * Basarse en `templates/pdf.html` y modificarlo para mejorar formato/agregar información
   * Investigar cómo guardar el mapa mostrado (`iframe`) como imágen y pegarlo en el PDF
   * Agregar el logo de la empresa
-* Hacer vista para mostrar el reporte como HTML en la URL `/reportes/<id>/`
-  * Aquí se debe mostrar lo mismo de `templates/rutas_mapa_generado.html` pero sin los botones
+* ~~Hacer vista para mostrar el reporte como HTML en la URL `/reportes/<id>/`~~
 * Hacer la vista con el listado de todos los reportes
   * Poner en la URL `/reportes/`
   * Basarse en `static templates/reportes.html` y `templates/clientes_lista.html` para el HTML
