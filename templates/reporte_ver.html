@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% load i18n %} {% block content %}
+    <div class="row">
+        <div class="col-sm-8">
+            <h2 class="">
+                Reporte
+                <small class="text-muted">{{ reporte.fecha }}</small>
+            </h2>
+            <iframe src="{{ reporte.mapa_url }}" class="w-100" height="500px" frameborder="0" style="border:0" allowfullscreen></iframe>
+        </div>
+        <div class="col-sm-4">
+            <h2>
+                <small class="text-muted">Información de la entrega</small>
+            </h2>
+            <div class="row">
+                <div class="col mb-3">
+                    <ul class="list-group text-center">
+                        <button type="button" class="lead list-group-item list-group-item-action">
+                            ⏱ ️{{ reporte.duracion }}
+                        </button>
+                    </ul>
+                </div>
+                <div class="col mb-3">
+                    <ul class="list-group text-center">
+                        <button type="button" class="lead list-group-item list-group-item-action">
+                            🚘 {{ reporte.distancia }}
+                        </button>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <ul class="list-group text-center">
+                        <button type="button" class="lead list-group-item list-group-item-action">
+                            👨‍✈️ {{ reporte.chofer.nombre }}
+                        </button>
+                    </ul>
+                </div>
+            </div> 
+
+            <ul class="list-group mb-3">
+                <a href="#clientList" data-toggle="collapse" class="text-center lead list-group-item list-group-item-action">
+                    👥 {{ clientes|length }} clientes
+                </a>
+                <div class="collapse" data-toggle="tooltip" data-placement="right" title="Se muestran en el orden en el que se les entregará."
+                    id="clientList">
+                    {% for c in clientes %}
+                        <a href="/clientes/{{ c.id }}/" target="_blank" class="list-group-item list-group-item-action">
+                            {{ c.nombre|title|truncatechars:40 }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </ul>
+            <hr>
+
+            {% with fecha=reporte.fecha|date:"d.m.y" %}<a target="_blank" href="{% url 'reporte_pdf' reporte.id fecha %}">{% endwith %}
+                <button type="button" class="btn btn-outline-primary w-100 mb-3">
+                    Generar PDF
+                </button>
+            </a>
+        </div>
+    </div>
+
+{% endblock %} {% block scripts %}
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            delay: {
+                show: 200,
+                hide: 50,
+            }
+
+        })
+    })
+</script> {% endblock %}
