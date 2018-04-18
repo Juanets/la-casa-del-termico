@@ -39,14 +39,7 @@ Sistema de generación de rutas óptimas para La Casa del Térmico.
 * Hacer un mapa de Google dinámico que muestre todos los clientes en el mapa.
 #### 3. ~~Generar la ruta~~
 #### 4. Reportes
-* Guardar la ruta generada en la base de datos, con los siguientes datos:
-  * ~~Fecha~~
-  * ~~Clientes involucrados~~
-  * ~~Chofer que hará la entrega~~
-  * ~~Duración~~
-  * ~~Distancia~~
-  * URL del mapa (el que se muestra cuando se genera la ruta)
-    * Agregar dicho campo a `rutas/models.py`
+* ~~Guardar la ruta generada en la base de datos~~
 * ~~Generación dinámica de PDFs~~
 * Darle formato bonito y mostrar la mayor cantidad de información posible
   * El reporte se hace en HTML y se transforma a PDF. Checar `templates/pdf.html`
