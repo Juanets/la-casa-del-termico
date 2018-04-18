@@ -37,22 +37,27 @@ Sistema de generación de rutas óptimas para La Casa del Térmico.
     * Que se llame `choferes/`
 #### 2. Mapa de clientes
 * Hacer un mapa de Google dinámico que muestre todos los clientes en el mapa.
-#### 3. Generación de ruta
-* Selección de clientes para la ruta
-  * Agregar la URL en `rutas/urls.py`, crear si no existe
-    * Que se llame `rutas/nueva/`
-  * Hacer la view en `rutas/views.py`
-    * Debería de jalar a todos los clientes y mandarlos a la template `rutas_escoger_clientes.html`
-  * Hacer la template en `templates/rutas_escoger_clientes.html`
-    * Basarse en `static templates/generar_rutas.html`
-    * La documentación del campo para buscar está [aquí](https://silviomoreto.github.io/bootstrap-select/examples/#live-search)
-  * Ver cómo usar jQuery o algo para que aparezcan más campos de búsqueda al clickear en `Agregar otro`    
-  * Investigar cómo usar [django-searchable-select](https://github.com/and3rson/django-searchable-select)
-  * Crear URL de ruta generada
-    * Que sea `rutas/nueva/<str:clientes>/` en `rutas/urls.py`
-  * Tomar los clientes seleccionados y mandarlos a la URL `rutas/nueva/<str:clientes>/` al clickear boton `Generar ruta`
-* Llamar a API de Maps
-  * Usar los clientes seleccionados, obtener sus coordenadas y llamar a la API a través de la URL
-  * La llamada a la API regresa datos de la ruta (tiempo, distancia, etc.) 
-    * Guardar dichos datos en base de datos
+#### 3. ~~Generar la ruta~~
 #### 4. Reportes
+* Guardar la ruta generada en la base de datos, con los siguientes datos:
+  * ~~Fecha~~
+  * ~~Clientes involucrados~~
+  * ~~Chofer que hará la entrega~~
+  * ~~Duración~~
+  * ~~Distancia~~
+  * URL del mapa (el que se muestra cuando se genera la ruta)
+    * Agregar dicho campo a `rutas/models.py`
+* ~~Generación dinámica de PDFs~~
+* Darle formato bonito y mostrar la mayor cantidad de información posible
+  * El reporte se hace en HTML y se transforma a PDF. Checar `templates/pdf.html`
+    * Basarse en `templates/pdf.html` y modificarlo para mejorar formato/agregar información
+  * Investigar cómo guardar el mapa mostrado (`iframe`) como imágen y pegarlo en el PDF
+  * Agregar el logo de la empresa
+* Hacer vista para mostrar el reporte como HTML en la URL `/reportes/<id>/`
+  * Aquí se debe mostrar lo mismo de `templates/rutas_mapa_generado.html` pero sin los botones
+* Hacer la vista con el listado de todos los reportes
+  * Poner en la URL `/reportes/`
+  * Basarse en `static templates/reportes.html` y `templates/clientes_lista.html` para el HTML
+  * Basarse en la función `clientes_lista` de `crud/views.py` para el código
+* Lo mismo de arriba pero para un chofer en específico
+  * Poner en la URL `/reportes/?chofer=<chofer>/'
