@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
+
 from easy_pdf.rendering import render_to_pdf_response
+from watson import search as watson
 import datetime
 import time
 
@@ -122,10 +125,12 @@ def guardar_ruta(request):
         duracion = request.POST.get('duracion')
         distancia = request.POST.get('distancia')
         mapa_url = request.POST.get('iframe_url')
-
+        print(fecha)
         r = Reporte(
                     fecha=fecha,
+                    fecha_str=locale_date(fecha),
                     chofer=chofer,
+                    chofer_nombre=chofer.nombre,
                     duracion=duracion,
                     distancia=distancia,
                     mapa_url=mapa_url,
@@ -143,11 +148,75 @@ def guardar_ruta(request):
         return redirect(reporte_ver, id=r.id)
 
 
+def reportes_lista(request):
+    reportes = Reporte.objects.all()
+
+    if not reportes:
+        return render(request, 'reportes_lista_vacio.html')
+
+    p = Paginator(reportes, 10)
+
+    page = request.GET.get('p')
+
+    if not page:
+        page = 1
+
+    page_range = calc_page_range(int(page), p.num_pages)
+
+    return render(request, 'reportes_lista.html', {'reportes': p.get_page(page), 'paginator': p, 'page_range': page_range})
+
+def calc_page_range(page, num_pages):
+    '''
+        Calcular de qué página a qué página se mostrará el menu paginador.
+        Ejemplo: si estas en la página 2, el paginador será de [2, 3, 4, 5, 6]
+    '''
+    start = page
+    end = page + 4
+
+    if end > num_pages:
+        diff = end - num_pages
+        end = end - diff
+
+    page_range = [i for i in range(start, end+1)]
+
+    return page_range
+
+def reporte_buscar_handler(request):
+    query = request.GET.get('query')
+    
+    return redirect(reporte_buscar, query=query)
+
+def reporte_buscar(request, query):
+    search_results = watson.filter(Reporte, query)
+
+    if not search_results:
+        section = 'reportes'
+        return render(request, 'buscar_404.html', {'query': query, 'section': section})
+
+    p = Paginator(search_results, 10)
+
+    page = request.GET.get('p')
+
+    if not page:
+        page = 1
+
+    page_range = calc_page_range(int(page), p.num_pages)
+
+    return render(request, 'reportes_lista.html', {'reportes': p.get_page(page), 'paginator': p, 'page_range': page_range, 'query': query})
+
 def reporte_ver(request, id):
     reporte = Reporte.objects.get(id=id)
     clientes = reporte.clientes.all()
 
-    return render(request, 'reporte_ver.html', {'reporte': reporte, 'clientes': clientes})
+    return render(request, 'reportes_ver.html', {'reporte': reporte, 'clientes': clientes})
+
+def reportes_borrar(request, id):
+    if request.method == 'POST':
+        reporte = Reporte.objects.get(id=id)
+        reporte.delete()
+        return redirect(reportes_lista)
+    else:
+        return redirect(reporte_ver, id=id)
 
 def reporte_pdf(request, id, fecha):
     # obtener el reporte que se quiere ver 
