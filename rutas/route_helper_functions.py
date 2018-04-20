@@ -8,6 +8,22 @@ import googlemaps
 # inicializar API de Maps
 gmaps = googlemaps.Client(key='AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo')
 
+# traducciones de meses
+months = {
+        'January': 'Enero',
+        'February': 'Febrero',
+        'March': 'Marzo',
+        'April': 'Abril',
+        'May': 'Mayo',
+        'June': 'Junio',
+        'July': 'Julio',
+        'August': 'Agosto',
+        'September': 'Septiembre',
+        'October': 'Octubre',
+        'November': 'Noviembre',
+        'December': 'Diciembre'        
+    }
+
 def calculate_route(client_list, optimize=False):
 
     # obtenemos las puras coordenadas del diccionario `client_list`
@@ -73,4 +89,13 @@ def get_clients_by_order(clients):
     preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(clients)])
 
     return Cliente.objects.filter(pk__in=clients).order_by(preserved)
-    
+
+def locale_date(date):
+    # obtener el mes en idioma español
+    en_month = date.strftime('%B')
+    es_month = months[en_month]
+
+    # escribir fecha completa en forma de texto en español
+    fecha = date.strftime('%d de {mes} del %Y a las %H:%M').format(mes=es_month)
+
+    return fecha
