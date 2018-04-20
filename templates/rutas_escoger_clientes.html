@@ -19,7 +19,7 @@
                 <div class="input-group-prepend ">
                     <span class="input-group-text waypoint-number" id="selector-number">{{ i }}.</span>
                 </div>
-                <select class="selectpicker form-control" data-live-search="true" title="Selecionar cliente" name='{{ i }}'>
+                <select class="selectpicker form-control" data-live-search="true" title="Selecionar cliente" name='{{ i }}' {% if i == 1 %}required {% endif %}>
                     {% for cliente in c %}
                         <option data-tokens="{{ cliente.zona }} {{ cliente.calle }} {{ cliente.colonia }} {{ cliente.cp }} {{ cliente.nombre }}"
                             value="{{ cliente.id }}">
