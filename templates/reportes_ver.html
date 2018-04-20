@@ -52,7 +52,9 @@
                 </div>
             </ul>
             <hr>
-
+            <button type="button" data-toggle="modal" data-target="#modal_borrar" class="btn btn-outline-danger w-100 mb-3">
+                Borrar reporte
+            </button>
             {% with fecha=reporte.fecha|date:"d.m.y" %}<a target="_blank" href="{% url 'reporte_pdf' reporte.id fecha %}">{% endwith %}
                 <button type="button" class="btn btn-outline-primary w-100 mb-3">
                     Generar PDF
@@ -61,6 +63,29 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal_borrar" tabindex="-1" role="dialog" aria-labelledby="modal_borrarLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="modal_borrarLabel">Borrar reporte</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Se <strong class="text-danger">eliminará</strong> el reporte
+                    <strong>#{{ reporte.id }}</strong> del día <strong>{{ reporte.fecha_str }}</strong>.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <form action="/reportes/borrar/{{ reporte.id }}/" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">Borrar</button>                
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %} {% block scripts %}
 <script>
     $(function () {
