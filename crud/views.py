@@ -48,7 +48,8 @@ def clientes_buscar(request, query):
     search_results = watson.filter(Cliente, query)
 
     if not search_results:
-        return render(request, 'buscar_404.html', {'query': query})
+        section = 'clientes'
+        return render(request, 'buscar_404.html', {'query': query, 'section': section})
 
     p = Paginator(search_results, 10)
 
