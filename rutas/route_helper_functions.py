@@ -96,6 +96,6 @@ def locale_date(date):
     es_month = months[en_month]
 
     # escribir fecha completa en forma de texto en español
-    fecha = date.strftime('%d de {mes} del %Y a las %H:%M').format(mes=es_month)
+    fecha = date.strftime('%d de {mes} del %Y, %H:%M %p').format(mes=es_month)
 
     return fecha
