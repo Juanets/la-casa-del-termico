@@ -10,5 +10,6 @@ urlpatterns = [
     path('reportes/buscar_handler/', views.reporte_buscar_handler, name='reporte_buscar_handler'),
     path('reportes/buscar/<str:query>/', views.reporte_buscar, name='reporte_buscar'),
     path('reportes/', views.reportes_lista, name='reportes_lista'),
-    path('reportes/borrar/<int:id>/', views.reportes_borrar, name='reportes_borrar'),                      
+    path('reportes/borrar/<int:id>/', views.reportes_borrar, name='reportes_borrar'),
+    path('chofer/<int:id>/entregas/', views.reportes_chofer, name='reportes_chofer'),    
 ]
