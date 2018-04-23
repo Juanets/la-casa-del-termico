@@ -125,7 +125,7 @@ def guardar_ruta(request):
         duracion = request.POST.get('duracion')
         distancia = request.POST.get('distancia')
         mapa_url = request.POST.get('iframe_url')
-        print(fecha)
+
         r = Reporte(
                     fecha=fecha,
                     fecha_str=locale_date(fecha),
@@ -236,3 +236,27 @@ def reporte_pdf(request, id, fecha):
                                 template=template, 
                                 context=context
                             )
+
+def reportes_chofer(request, id):
+    chofer = Chofer.objects.get(id=id)
+    reportes = Reporte.objects.filter(chofer=chofer)
+
+    if not reportes:
+        return render(request, 'reportes_lista_chofer_vacio.html', {'chofer':chofer})
+
+    p = Paginator(reportes, 10)
+
+    page = request.GET.get('p')
+
+    if not page:
+        page = 1
+
+    page_range = calc_page_range(int(page), p.num_pages)
+
+    return render(request, 'reportes_lista_chofer.html', {
+                                                            'reportes': p.get_page(page),
+                                                            'chofer': chofer, 
+                                                            'paginator': p, 
+                                                            'page_range': page_range
+                                                        }
+                                                    )
