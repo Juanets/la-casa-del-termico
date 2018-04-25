@@ -1,0 +1,93 @@
+{% extends 'base.html' %} 
+
+{% block css %}
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> 
+{% endblock %} 
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col m-0">
+        <h2 class="mb-0">
+            Choferes
+            <small class="text-muted">Ver</small>
+        </h2>
+    </div>
+</div>
+
+{% if messages %}
+<div class="alert alert-success" role="alert">
+    {{ messages|safe }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+
+<div class="row">
+    {% for c in choferes %}
+        <div class="col-lg-4 pl-0">
+            <div class="card m-3">
+                <div class="card-body">
+                    <h5 class="card-title row">
+                        <div class="col-sm-10 lead"><strong>{{ c.nombre|title }}</strong></div>
+                        <div class="col-sm-2"><small class="lead">
+                                <a tabindex="0" class="settings btn-link p-0" role="button" 
+                                data-toggle="popover" data-trigger="focus" html=true data-placement="top"
+                                data-content="<a href='/chofer/{{ c.id }}/editar'><i class='far fa-edit'></i></a>&emsp;
+                                <a href='#' data-toggle='modal' data-target='#modal_borrar_{{ c.id }}'><i class='far fa-trash-alt'></i></a>">
+                                <i class="fas fa-cog"></i>
+                                </a>
+                        </small></div>
+                    </h5>
+                    <hr>
+                    <p class="card-text"><strong class="text-muted">Correo: </strong>{{ c.correo }}</p>
+                    <p class="card-text"><strong class="text-muted">Teléfono: </strong>{{ c.telefono }}</p>                          
+
+                    
+                    <a href="/chofer/{{ c.id }}/entregas/" class="btn btn-outline-primary">Ver entregas</a>
+                    
+                </div>
+            </div>                
+        </div>
+
+        <div class="modal fade" id="modal_borrar_{{ c.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_borrar_{{ c.id }}Label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title " id="modal_borrar_{{ c.id }}Label">Borrar chofer</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Se <strong class="text-danger">eliminará</strong> al chofer
+                        <strong>{{ c.nombre|title }}</strong>.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                        <form action="/chofer/{{ c.id }}/borrar/" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger">Borrar</button>                
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    
+{% endblock %}
+
+{% block scripts %}
+    <script>
+    $(function () {
+        $('[data-toggle="popover"]').popover({
+            html: true,
+        })
+    })
+
+    $('.popover-dismiss').popover({
+        trigger: 'focus',
+    })
+
+    </script>
+{% endblock %}
