@@ -11,6 +11,7 @@ from rutas.models import Reporte, DeliveringOrder
 from .route_helper_functions import *
 
 def generar_ruta(request):
+    '''Funcion para generar ruta optima usando la API de Google Maps.'''
     if request.method == 'POST':
 
         # posicion en la lista de los clientes priorizados
@@ -112,20 +113,27 @@ def generar_ruta(request):
                                             )
 
 def escoger_clientes(request):
+    '''Funcion para que el usuario escoja los clientes de la ruta.'''
+
+    # obtener todos los clientes
     c = Cliente.objects.all()
 
+    # renderear la seccion de escoger clientes para ruta
     return render(request, 'rutas_escoger_clientes.html', {'c':c, 'range': range(1, 24)})
 
 
 def guardar_ruta(request):
+    '''Funcion para guardar ruta en la base de datos.'''
+    # si el request es POST
     if request.method == 'POST':
-        fecha = datetime.datetime.now()
-        clientes = get_clients_by_order(request.POST.getlist('ids'))
-        chofer = Chofer.objects.get(id=request.POST.get('chofer'))
-        duracion = request.POST.get('duracion')
-        distancia = request.POST.get('distancia')
-        mapa_url = request.POST.get('iframe_url')
+        fecha = datetime.datetime.now() # fecha 
+        clientes = get_clients_by_order(request.POST.getlist('ids')) # lista de clientes
+        chofer = Chofer.objects.get(id=request.POST.get('chofer')) # chofer de la ruta
+        duracion = request.POST.get('duracion') # duracion de la ruta
+        distancia = request.POST.get('distancia') # distancia total en km
+        mapa_url = request.POST.get('iframe_url') # URL de maps para visualizar la ruta
 
+        # creamos el reporte y guardamos
         r = Reporte(
                     fecha=fecha,
                     fecha_str=locale_date(fecha),
@@ -149,76 +157,84 @@ def guardar_ruta(request):
 
 
 def reportes_lista(request):
+    '''Funcion para mostrar una tabla de todos los reportes guardados.'''
+
+    # obtenemos todos los reportes
     reportes = Reporte.objects.all()
 
+    # si aun no hay reportes, se le indica al usuario
     if not reportes:
         return render(request, 'reportes_lista_vacio.html')
 
+    # paginacion
     p = Paginator(reportes, 10)
-
     page = request.GET.get('p')
-
     if not page:
         page = 1
-
+        
     page_range = calc_page_range(int(page), p.num_pages)
 
+    # renderear la lista de reportes
     return render(request, 'reportes_lista.html', {'reportes': p.get_page(page), 'paginator': p, 'page_range': page_range})
 
-def calc_page_range(page, num_pages):
-    '''
-        Calcular de qué página a qué página se mostrará el menu paginador.
-        Ejemplo: si estas en la página 2, el paginador será de [2, 3, 4, 5, 6]
-    '''
-    start = page
-    end = page + 4
-
-    if end > num_pages:
-        diff = end - num_pages
-        end = end - diff
-
-    page_range = [i for i in range(start, end+1)]
-
-    return page_range
-
 def reporte_buscar_handler(request):
+    '''Funcion para obtener el termino de busqueda y redireccionar a la busqueda.'''    
     query = request.GET.get('query')
     
     return redirect(reporte_buscar, query=query)
 
 def reporte_buscar(request, query):
+    '''Funcion para filtrar reportes por chofer, tiempo, fecha o distancia.'''
+
+    # usamos la libreria `watson` para filtrar los clientes de acuerdo a la query de busqueda    
     search_results = watson.filter(Reporte, query)
 
+    # si no hay resultados de busqueda, se le indicara al cliente
     if not search_results:
         section = 'reportes'
         return render(request, 'buscar_404.html', {'query': query, 'section': section})
 
+    # mostramos hasta 10 reusltados por pagina
     p = Paginator(search_results, 10)
-
     page = request.GET.get('p')
-
     if not page:
         page = 1
 
     page_range = calc_page_range(int(page), p.num_pages)
 
+    # finalmente mostramos los resultados al usuario
     return render(request, 'reportes_lista.html', {'reportes': p.get_page(page), 'paginator': p, 'page_range': page_range, 'query': query})
 
 def reporte_ver(request, id):
+    '''Funcion para ver un reporte en especifico.'''
+
+    # obtenemos el reporte que se quiere ver
     reporte = Reporte.objects.get(id=id)
+
+    # estos son los clientes involucrados en la ruta de entrega
     clientes = reporte.clientes.all()
 
     return render(request, 'reportes_ver.html', {'reporte': reporte, 'clientes': clientes})
 
 def reportes_borrar(request, id):
+    '''Funcion para borrar un reporte.'''
+
+    # esta funcion solo es accesible a traves de un metodo POST    
     if request.method == 'POST':
         reporte = Reporte.objects.get(id=id)
         reporte.delete()
+        # despues de borrar se le redirige al usuario a la lista de todos los reportes
         return redirect(reportes_lista)
+
+    # si se quiere acceder a traves de GET, se redirigira al perfil del cliente
+    # esto se hace como una medida de seguridad
+    # (no se debe alterar informacion a traves de requests tipo GET)        
     else:
         return redirect(reporte_ver, id=id)
 
 def reporte_pdf(request, id, fecha):
+    '''Funcion para generar PDFs de las rutas dinamicamente.'''
+
     # obtener el reporte que se quiere ver 
     r = Reporte.objects.get(id=id)
     context = r.__dict__
@@ -238,21 +254,28 @@ def reporte_pdf(request, id, fecha):
                             )
 
 def reportes_chofer(request, id):
+    '''Funcion para ver la lista de entregas que ha hecho un chofer.'''
+
+    # obtener el chofer que se quiere ver
     chofer = Chofer.objects.get(id=id)
+    
+    # consultar reportes de dicho chofer
     reportes = Reporte.objects.filter(chofer=chofer)
 
+    # si el chofer no tiene entregas (reportes)
+    # rendereamos que le indica eso mismo al usuario
     if not reportes:
         return render(request, 'reportes_lista_chofer_vacio.html', {'chofer':chofer})
 
+    # paginador, rango de pagindaor, etc
     p = Paginator(reportes, 10)
-
     page = request.GET.get('p')
-
     if not page:
         page = 1
 
     page_range = calc_page_range(int(page), p.num_pages)
 
+    # renderear una lista de reportes del chofer
     return render(request, 'reportes_lista_chofer.html', {
                                                             'reportes': p.get_page(page),
                                                             'chofer': chofer, 

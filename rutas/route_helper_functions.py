@@ -73,24 +73,37 @@ def calculate_route_distance(route):
     return distance
 
 def subtract_client_list(parent, child):
-    # funcion para quitar lista de clientes priorizados
-    # de la lista de clientes completa
-    # para obtener la lista de los no priorizados
+    '''
+        Funcion para quitar lista de clientes priorizados
+        de la lista de clientes completa
+        para obtener la lista de los no priorizados.
+    '''
+
+    # convertimos listas a hashable para poder aplicarles la funcion `set()`
     parent_hashable = (frozenset(x.items()) for x in parent)
     child_hashable = (frozenset(x.items()) for x in child)
 
+    # obtenemos la diferencia entre las dos listas
     diff = set(parent_hashable).difference(child_hashable)
 
+    # regresamos una lista de dicts
     return [dict(x) for x in diff]
 
 def get_clients_by_order(clients):
-    # preservar orden al hacer el filtrado en la base de datos 
-    # i.e: .order_by(preserved)
+    '''
+        Funcion para preservar orden al hacer el filtrado en la base de datos.
+        i.e: .order_by(preserved)
+        Se usara para obtener clientes de acuerdo a su prioridad.
+    '''
+    # hacemos uso de la funcion `Case` de Django 
     preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(clients)])
 
+    # hacemos la consulta a la base de datos y ordenamos por `preserved`
     return Cliente.objects.filter(pk__in=clients).order_by(preserved)
 
 def locale_date(date):
+    '''Funcion para dar formato humano (y en español) a las fechas.'''
+    
     # obtener el mes en idioma español
     en_month = date.strftime('%B')
     es_month = months[en_month]
@@ -99,3 +112,29 @@ def locale_date(date):
     fecha = date.strftime('%d de {mes} del %Y, %H:%M %p').format(mes=es_month)
 
     return fecha
+
+def calc_page_range(page, num_pages):
+    '''
+        Calcular de qué página a qué página se mostrará el menu paginador.
+        Ejemplo: si estas en la página 2, el paginador será de [2, 3, 4, 5, 6]
+    '''
+
+    # pagina inicial (e.g. 2)
+    start = page
+
+    # pagina final (e.g. 6)
+    # en otras palabras, hasta qué página se mostrara
+    end = page + 4
+
+    # la suma anterior no puede ser mayor al numero de paginas total
+    if end > num_pages:
+        # sacamos la diferencia de rango
+        diff = end - num_pages
+        end = end - diff
+
+    # creamos un arreglo a partir del inicio y final de las paginas
+    # e.g si start=2 y end=6 entonces page_range=[2, 3, 4, 5, 6]
+    page_range = [i for i in range(start, end+1)]
+
+    # regresamos el rango de paginas
+    return page_range
