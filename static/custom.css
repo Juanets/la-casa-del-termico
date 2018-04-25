@@ -14,6 +14,15 @@
     color: #000;
   }
 
+  .settings {
+    color: rgba(0,0,0,.2);
+    cursor: pointer;
+  }
+
+  .settings:hover {
+    color: rgba(0,0,0,.4);
+  }
+
   .a-clean:hover {
     color: #007bff !important;
   }
@@ -103,3 +112,26 @@
   .bootstrap-select.btn-group .dropdown-toggle .filter-option {
     display: inline !important;
   }
+
+  /* footer */
+
+  body {
+    position: relative;
+    margin: 0;
+    padding-bottom: 6rem;
+    min-height: 100%;
+  }
+  html {
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #efefef;
+    text-align: center;
+  }
+ 
