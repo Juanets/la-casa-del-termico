@@ -18,6 +18,9 @@ class ClienteForm(forms.ModelForm):
     class Meta:
         # indicamos que el modelo sera el de Cliente
         model = Cliente
+        fields = '__all__'
 
-        # y se utilizaran todos sus campos
+class ChoferForm(forms.ModelForm):    
+    class Meta:
+        model = Chofer
         fields = '__all__'

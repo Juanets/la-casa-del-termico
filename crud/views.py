@@ -1,5 +1,7 @@
 from crud.models import Cliente
-from crud.forms import ClienteForm
+from crud.forms import ClienteForm 
+from crud.models import Chofer
+from crud.forms import ChoferForm
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
@@ -194,23 +196,59 @@ def clientes_borrar(request, id):
     else:
         return redirect(clientes_ver, id=id)
 
-def clientes_mapa(request):
-    '''Generar un mapa que muestre a todos los clientes como un punto en la ciudad.'''
 
-    # obtenemos todos los clientes
-    clientes = Cliente.objects.all()
+'''__________________________________________________________________'''
+def chofer_ver(request, id):
+    chofer = Chofer.objects.get(id=id)
+    return render(request, 'chofer_ver.html', {'c': chofer})
 
-    # sacamos las coordenadas (solo de 200 clientes, debido a limitaciones de google maps)
-    clientes_coord =  ['{lat},{lng}'.format(lat=c.lat[:6], lng=c.lng[:10]) for c in clientes[:200]]
 
-    # URL del mapa con todos sus parametros
-    map_url = (
-                'https://maps.googleapis.com/maps/api/staticmap?size=640x640'
-                '&key=AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo'
-                '&center=29.082987,-110.979481&zoom=12'
-                '&maptype=roadmap&markers=size:tiny|'
-                '{c}'.format(c='&markers=size:tiny|'.join(clientes_coord))
-    )
 
-    # mostramos el mapa en la url `/clientes/mapa/` usando la template `clientes_mapa.html`
-    return render(request, 'clientes_mapa.html', {'map_url': map_url, 'clientes_length': len(clientes)})
+def choferes_nuevo(request):
+    if request.method == 'POST':
+        form = ChoferForm(request.POST)
+        if form.is_valid():
+            nuevo = Chofer()
+            nuevo.nombre = form.cleaned_data['nombre']
+            nuevo.telefono = form.cleaned_data['colonia'] 
+
+            if form.cleaned_data['correo']:
+                nuevo.correo = form.cleaned_data['correo']
+            else:
+                nuevo.correo = 'Sin correo'  
+
+            nuevo.save()
+
+            success = '''Chofer <i>{chofer}</i> creado con éxito. <a href="/chofer/nuevo" 
+            class="alert-link">¿Crear otro?</a>'''.format(chofer=nuevo.nombre)
+
+            return render(request, 'chofer_ver.html', {'c': nuevo, 'messages': success})
+            
+    else:
+        form = ChoferForm()      
+        return render(request, 'chofer_nuevo.html', {'form': form})
+
+
+
+def chofer_editar(request, id):
+    chofer = Chofer.objects.get(id=id)    
+    if request.method == 'POST':
+        form = ChoferForm(request.POST)
+        if form.is_valid():
+            chofer.nombre = form.cleaned_data['nombre']
+            chofer.telefono = form.cleaned_data['telefono']
+        
+            if form.cleaned_data['correo']:
+                cliente.correo = form.cleaned_data['correo']
+            else:
+                cliente.correo = 'Sin correo'                
+
+            cliente.save()
+
+            success = 'Chofer <i>{chofer}</i> editado con éxito'.format(cliente=cliente.nombre)
+
+            return render(request, 'chofer_ver.html', {'c': cliente, 'messages': success})
+            
+    else:
+        form = ChoferForm(initial=chofer.__dict__)
+        return render(request, 'clientes_editar.html', {'form': form, 'c': cliente})
