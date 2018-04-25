@@ -1,7 +1,9 @@
 from django.db import models
 
-# Create your models here.
+# modelos de base de datos
+# aqui se crean las entidades de la base de datos y sus campos (y el tipo de campos)
 class Cliente(models.Model):
+    '''Campos del cliente.'''
     nombre = models.CharField(max_length=100)
     correo = models.CharField(blank=True, max_length=60)
     telefono = models.CharField(blank=True, max_length=50)
@@ -16,6 +18,7 @@ class Cliente(models.Model):
 
 
 class Chofer(models.Model):
+    '''Campos del chofer.'''
     nombre = models.CharField(max_length=50)
     correo = models.CharField(blank=True, max_length=70)
     telefono = models.CharField(blank=True, max_length=13)
