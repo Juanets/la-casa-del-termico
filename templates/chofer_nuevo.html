@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="bootstrap4-select.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col m-0">   
+                <h2 class="mb-0">
+                    Chofer
+                    <small class="text-muted">Nuevo</small>
+                </h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            <form class="w-100" action="">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Nombre</span>
+                </div>                
+                <input type="text" class="form-control" placeholder="" aria-label="Nombre">
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Correo&nbsp;&nbsp;</span>
+                        </div>                        
+                        <input type="text" class="form-control" aria-label="Correo">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Teléfono</span>
+                        </div>                        
+                        <input type="text" class="form-control" aria-label="Tel">
+                    </div>
+                </div>    
+                <div class="col-md-4">
+                    <div class="input-group mb-3 custom-file">
+                                                
+                        <input type="file" class="custom-file-input" id="customFile" lang="es">
+                        <label class="custom-file-label" for="customFile" >Seleccionar</label>
+                    </div>
+                </div>                                            
+            </div>
+            <button type="button" class="btn btn-outline-primary w-100">Enviar</button>            
+            </form>        
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    
+  </body>
+</html>
+
+{% endblock %}
