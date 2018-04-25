@@ -1,5 +1,5 @@
 from django import forms
-from crud.models import Cliente
+from crud.models import Cliente, Chofer
 
 # opciones de zona
 ZONA_CHOICES = (('1', 'Norte',), ('2', 'Sur',))
