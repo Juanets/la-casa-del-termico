@@ -1,7 +1,5 @@
-from crud.models import Cliente
-from crud.forms import ClienteForm 
-from crud.models import Chofer
-from crud.forms import ChoferForm
+from crud.models import Cliente, Chofer
+from crud.forms import ClienteForm, ChoferForm
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
@@ -196,59 +194,124 @@ def clientes_borrar(request, id):
     else:
         return redirect(clientes_ver, id=id)
 
+def clientes_mapa(request):
+    '''Generar un mapa que muestre a todos los clientes como un punto en la ciudad.'''
 
-'''__________________________________________________________________'''
-def chofer_ver(request, id):
-    chofer = Chofer.objects.get(id=id)
-    return render(request, 'chofer_ver.html', {'c': chofer})
+    # obtenemos todos los clientes
+    clientes = Cliente.objects.all()
 
+    # sacamos las coordenadas (solo de 200 clientes, debido a limitaciones de google maps)
+    clientes_coord =  ['{lat},{lng}'.format(lat=c.lat[:6], lng=c.lng[:10]) for c in clientes[:200]]
 
+    # URL del mapa con todos sus parametros
+    map_url = (
+                'https://maps.googleapis.com/maps/api/staticmap?size=640x640'
+                '&key=AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo'
+                '&center=29.082987,-110.979481&zoom=12'
+                '&maptype=roadmap&markers=size:tiny|'
+                '{c}'.format(c='&markers=size:tiny|'.join(clientes_coord))
+    )
 
-def choferes_nuevo(request):
+    # mostramos el mapa en la url `/clientes/mapa/` usando la template `clientes_mapa.html`
+    return render(request, 'clientes_mapa.html', {'map_url': map_url, 'clientes_length': len(clientes)})
+
+def choferes_ver(request):
+    '''Funcion para mostrar los choferes registrados y toda su informacion.'''
+
+    # consultamos a la base de datos 
+    choferes = Chofer.objects.all()
+
+    # rendereamos la template
+    return render(request, 'choferes.html', {'choferes': choferes})
+
+def chofer_nuevo(request):
+    '''Funcion para registrar un nuevo chofer en el sistema.'''
+
+    # si la request es tipo POST...
     if request.method == 'POST':
+        
+        # creamos el formulario, lo llenamos con la informacion
+        # que se introdujo y validamos
         form = ChoferForm(request.POST)
         if form.is_valid():
+
+            # creamos un nuevo chofer con la informacion introducida
             nuevo = Chofer()
             nuevo.nombre = form.cleaned_data['nombre']
-            nuevo.telefono = form.cleaned_data['colonia'] 
+            nuevo.telefono = form.cleaned_data['telefono'] 
+            nuevo.correo = form.cleaned_data['correo']
 
-            if form.cleaned_data['correo']:
-                nuevo.correo = form.cleaned_data['correo']
-            else:
-                nuevo.correo = 'Sin correo'  
-
+            # guardamos en chofer en la BD
             nuevo.save()
 
+            # mensaje de exito
             success = '''Chofer <i>{chofer}</i> creado con éxito. <a href="/chofer/nuevo" 
             class="alert-link">¿Crear otro?</a>'''.format(chofer=nuevo.nombre)
 
-            return render(request, 'chofer_ver.html', {'c': nuevo, 'messages': success})
-            
+            # obtenemos todos los choferes y los mostramos
+            choferes = Chofer.objects.all()
+            return render(request, 'choferes.html', {'choferes': choferes, 'messages': success})
+
+    # si la request es tipo GET...            
     else:
-        form = ChoferForm()      
+        
+        # simplemente creamos el form y lo mostramos en `chofer_nuevo.html`
+        form = ChoferForm()
         return render(request, 'chofer_nuevo.html', {'form': form})
 
 
 
 def chofer_editar(request, id):
-    chofer = Chofer.objects.get(id=id)    
+    '''Funcion para editar un chofer existente.'''
+
+    # obtenemos al chofer que se quiere editar
+    chofer = Chofer.objects.get(id=id)
+    
+    # si la request es tipo POST (se introduce informacion a traves de un form)
     if request.method == 'POST':
+
+        # creamos el formulario, lo llenamos con la informacion
+        # que se introdujo y validamos        
         form = ChoferForm(request.POST)
         if form.is_valid():
             chofer.nombre = form.cleaned_data['nombre']
             chofer.telefono = form.cleaned_data['telefono']
-        
-            if form.cleaned_data['correo']:
-                cliente.correo = form.cleaned_data['correo']
-            else:
-                cliente.correo = 'Sin correo'                
+            chofer.correo = form.cleaned_data['correo']              
 
-            cliente.save()
+            # actualizamos al chofer
+            chofer.save()
 
-            success = 'Chofer <i>{chofer}</i> editado con éxito'.format(cliente=cliente.nombre)
+            # mensaje de exito para el usuario
+            success = 'Chofer <i>{chofer}</i> editado con éxito'.format(chofer=chofer.nombre)
 
-            return render(request, 'chofer_ver.html', {'c': cliente, 'messages': success})
-            
+            # posteriormente consultamos la lista de choferes y la mostramos 
+            choferes = Chofer.objects.all()
+            return render(request, 'choferes.html', {'choferes': choferes, 'messages': success})
+
+    # si la request es tipo GET...            
     else:
+        # creamos un ChoferForm y lo llenamos con la informacion actual del chfoer
+        # despues se lo mostramos al usuario par que lo edite
         form = ChoferForm(initial=chofer.__dict__)
-        return render(request, 'clientes_editar.html', {'form': form, 'c': cliente})
+        return render(request, 'chofer_editar.html', {'form': form, 'c': chofer})
+
+def chofer_borrar(request, id):
+    '''Funcion para borrar un chofer a partir de su ID.'''
+
+    # esta funcion solo es accesible a traves de un metodo POST
+    if request.method == 'POST':
+
+        # se obtiene el cliente 
+        chofer = Chofer.objects.get(id=id)
+
+        # borramos el cliente
+        chofer.delete()
+
+        # finalmente redirigimos a la lista de todos los clientes
+        return redirect(choferes_ver)
+    
+    # si se quiere acceder a traves de GET, se redirigira al perfil del cliente
+    # esto se hace como una medida de seguridad
+    # (no se debe alterar informacion a traves de requests tipo GET)
+    else:
+        return redirect(choferes_ver)
