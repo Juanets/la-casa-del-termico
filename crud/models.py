@@ -20,5 +20,5 @@ class Cliente(models.Model):
 class Chofer(models.Model):
     '''Campos del chofer.'''
     nombre = models.CharField(max_length=50)
-    correo = models.CharField(blank=True, max_length=70)
-    telefono = models.CharField(blank=True, max_length=13)
+    correo = models.EmailField()
+    telefono = models.IntegerField()
