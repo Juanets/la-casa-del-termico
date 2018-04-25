@@ -39,9 +39,9 @@
               Choferes
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Ver choferes</a>
+              <a class="dropdown-item" href="/choferes/">Ver choferes</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Nuevo chofer</a>
+              <a class="dropdown-item" href="/chofer/nuevo/">Nuevo chofer</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -70,17 +70,21 @@
       </div>
     </nav>
 
-    <div class="container">
+    <main class="container" role="main">
       {% block content %}
 
       {% endblock %}
-    </div>
-
+    </main>
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+      </div>
+    </footer>
     <!-- JS Scripts -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
     {% block scripts %}{% endblock %}
   </body>
 </html>
