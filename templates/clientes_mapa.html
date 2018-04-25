@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col text-left mb-3">
+        <h2 class="mb-0">
+            <a href="/clientes/" class="a-clean">Clientes</a>
+            <small class="text-muted">Mapa</small>
+        </h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-7 mb-3">
+        <img src="{{ map_url }}" alt="Mapa de clientes" class="img-fluid rounded">
+    </div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-body lead">
+                <span class="texts-muted"><strong>Clientes de La Casa del Térmico.</strong></span><br>
+                Un apoyo visual para contemplar la distribución general de los clientes alrededor de la ciudad. <br><br>
+                Debido a limitaciones de <em>Google Maps</em>, sólo se muestran <strong>200</strong> de <strong>{{ clientes_length }}</strong> clientes
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

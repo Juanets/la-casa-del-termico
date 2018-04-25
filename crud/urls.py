@@ -10,4 +10,6 @@ urlpatterns = [
     path('clientes/nuevo/', views.clientes_nuevo, name='clientes_nuevo'), # crear cliente
     path('clientes/editar/<int:id>/', views.clientes_editar, name='clientes_editar'), # modificar cliente
     path('clientes/borrar/<int:id>/', views.clientes_borrar, name='clientes_borrar'), # borrar cliente
+    path('clientes/mapa/', views.clientes_mapa, name='clientes_mapa'), # visualizar todos los clientes en el mapa de Hermosillo
+    
 ]

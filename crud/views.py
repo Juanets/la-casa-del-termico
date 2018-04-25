@@ -193,3 +193,24 @@ def clientes_borrar(request, id):
     # (no se debe alterar informacion a traves de requests tipo GET)
     else:
         return redirect(clientes_ver, id=id)
+
+def clientes_mapa(request):
+    '''Generar un mapa que muestre a todos los clientes como un punto en la ciudad.'''
+
+    # obtenemos todos los clientes
+    clientes = Cliente.objects.all()
+
+    # sacamos las coordenadas (solo de 200 clientes, debido a limitaciones de google maps)
+    clientes_coord =  ['{lat},{lng}'.format(lat=c.lat[:6], lng=c.lng[:10]) for c in clientes[:200]]
+
+    # URL del mapa con todos sus parametros
+    map_url = (
+                'https://maps.googleapis.com/maps/api/staticmap?size=640x640'
+                '&key=AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo'
+                '&center=29.082987,-110.979481&zoom=12'
+                '&maptype=roadmap&markers=size:tiny|'
+                '{c}'.format(c='&markers=size:tiny|'.join(clientes_coord))
+    )
+
+    # mostramos el mapa en la url `/clientes/mapa/` usando la template `clientes_mapa.html`
+    return render(request, 'clientes_mapa.html', {'map_url': map_url, 'clientes_length': len(clientes)})
