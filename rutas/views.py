@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
+from django.http import HttpResponse
+from django.template.loader import get_template 
 
-from easy_pdf.rendering import render_to_pdf_response
 from watson import search as watson
+import pdfkit
 import datetime
 import time
 
@@ -232,27 +234,6 @@ def reportes_borrar(request, id):
     else:
         return redirect(reporte_ver, id=id)
 
-def reporte_pdf(request, id, fecha):
-    '''Funcion para generar PDFs de las rutas dinamicamente.'''
-
-    # obtener el reporte que se quiere ver 
-    r = Reporte.objects.get(id=id)
-    context = r.__dict__
-
-    # obtener clientes y chofer de la entrega
-    context['clientes'] = r.clientes.all()
-    context['chofer'] = r.chofer.nombre
-
-    # plantilla HTML que se transformará a PDF
-    template = 'pdf.html'
-    
-    # abrir el PDF generado en una nueva pestaña dentro del navegador
-    return render_to_pdf_response(
-                                request=request, 
-                                template=template, 
-                                context=context
-                            )
-
 def reportes_chofer(request, id):
     '''Funcion para ver la lista de entregas que ha hecho un chofer.'''
 
@@ -283,3 +264,33 @@ def reportes_chofer(request, id):
                                                             'page_range': page_range
                                                         }
                                                     )
+
+def reporte_pdf(request, id, fecha):
+
+    template = get_template('pdf.html')
+
+    # obtener el reporte que se quiere ver 
+    r = Reporte.objects.get(id=id)
+    context = r.__dict__
+
+    # obtener clientes y chofer de la entrega
+    context['clientes'] = r.clientes.all()
+    context['chofer'] = r.chofer.nombre
+
+    html = template.render(context)
+
+    options = {
+        'margin-top': '20mm',
+        'margin-right': '20mm',
+        'margin-bottom': '20mm',
+        'margin-left': '20mm',
+        'javascript-delay': 1000,
+
+    }
+
+    pdf = pdfkit.from_string(html, False, options=options)
+
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="somefilename.pdf"'
+
+    return response
