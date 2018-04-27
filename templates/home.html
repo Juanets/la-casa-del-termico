@@ -1,11 +1,14 @@
 {% extends 'base.html' %} 
 
+{% load static %}
+
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
         <div class="jumbotron jumbotron-fluid p-5">
-            <div class="container">
-                <h1 class="display-4">La Casa del Térmico</h1>
+            <div class="container align-middle text-center">
+                <!-- <h1 class="display-4">La Casa del Térmico</h1> -->
+                <img src="{% static 'logo.png' %}" class='p-0 mb-3 w-50'>
                 <p class="lead">Sistema generador de rutas de entrega óptimas para La Casa del Térmico.</p>
             </div>
         </div>
