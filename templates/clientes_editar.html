@@ -14,7 +14,7 @@
 </div>
 
 <div class="row">
-    <form action="/clientes/editar/{{ c.id }}/" method="POST">
+    <form action="/clientes/{{ c.id }}/editar/" method="POST">
         {% csrf_token %}        
         <div class="form-row">
             <h5 class="text-muted mt-2 ml-1">Información de contacto</h5>

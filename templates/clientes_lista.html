@@ -22,7 +22,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Calle</th>
-                <th scope="col">Calle</th>
+                <th scope="col">Colonia</th>
                 <th scope="col">CP</th>                                
                 <th scope="col">Teléfono</th>
                 <th scope="col">Correo</th>
@@ -34,7 +34,7 @@
             <tr>
                 <th scope="row">{{ c.id }}</th>
                 <td>{{ c.nombre|title|truncatechars:25 }}</td>
-                <td>{{ c.calle|add:" "|add:c.numero_int|add:" "|add:c.numero_ext|title|truncatechars:30 }}</td>
+                <td>{{ c.calle|add:" "|add:c.numero_int|add:" "|add:c.numero_ext|title|truncatechars:25 }}</td>
                 <td>{{ c.colonia|title }}</td>
                 <td>{{ c.cp }}</td>
                 <td>{{ c.telefono|truncatechars:10 }}</td>
@@ -42,7 +42,7 @@
                 <td>
                     <a href="/clientes/{{ c.id }}"><i class="far fa-user"></i></a>&emsp;
                     <a href="https://www.google.com/maps?q={{ c.lat }},{{ c.lng }}"><i class="far fa-map"></i></a>&emsp;
-                    <a href="/clientes/editar/{{ c.id }}"><i class="fas fa-edit"></i></a>&emsp;
+                    <a href="/clientes/{{ c.id }}/editar/"><i class="fas fa-edit"></i></a>&emsp;
                     <a  href="#" data-toggle="modal" data-target="#modal_borrar_{{ c.id }}"><i class="far fa-trash-alt"></i></a>
                 </td>
             </tr>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                            <form action="/clientes/borrar/{{ c.id }}/" method="POST">
+                            <form action="/clientes/{{ c.id }}/borrar/" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-outline-danger">Borrar</button>                
                             </form>
