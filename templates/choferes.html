@@ -14,9 +14,9 @@
     </div>
 </div>
 
-{% if messages %}
+{% if messages.success %}
 <div class="alert alert-success" role="alert">
-    {{ messages|safe }}
+    {{ messages.success|safe }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>

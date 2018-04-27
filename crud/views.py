@@ -1,11 +1,13 @@
 from crud.models import Cliente, Chofer
 from crud.forms import ClienteForm, ChoferForm
+from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from watson import search as watson
 from rutas.route_helper_functions import calc_page_range
 
+@login_required
 def clientes_lista(request):
     '''Funcion para mostrar la lista de todos clientes como tabla.'''
 
@@ -28,6 +30,7 @@ def clientes_lista(request):
     # rendereamos los clientes
     return render(request, 'clientes_lista.html', {'clientes': p.get_page(page), 'paginator': p, 'page_range': page_range})
 
+@login_required
 def clientes_ver(request, id):
     '''Funcion para mostrar el perfil de un cliente en especifico.'''
 
@@ -37,6 +40,7 @@ def clientes_ver(request, id):
     # rendereamos dicho cliente usando la template `clientes_ver.html`
     return render(request, 'clientes_ver.html', {'c': cliente})
 
+@login_required
 def clientes_buscar_handler(request):
     '''Funcion para obtener el termino de busqueda y redireccionar a la busqueda.'''
 
@@ -47,6 +51,7 @@ def clientes_buscar_handler(request):
     # redireccionamos para hacer la busqueda
     return redirect(clientes_buscar, query=query)
 
+@login_required
 def clientes_buscar(request, query):
     '''Buscar clientes a partir de su nombre, direccion, telefono, correo...'''
 
@@ -72,6 +77,7 @@ def clientes_buscar(request, query):
     # mostramos la lista de clientes filtrados
     return render(request, 'clientes_lista.html', {'clientes': p.get_page(page), 'paginator': p, 'page_range': page_range, 'query': query})
 
+@login_required
 def clientes_nuevo(request):
     '''Funcion para crear un nuevo cliente.'''
 
@@ -116,7 +122,7 @@ def clientes_nuevo(request):
             class="alert-link">¿Crear otro?</a>'''.format(cliente=nuevo.nombre)
 
             # una vez creado, mostramos el perfil del cliente creado y anexamos el mensaje de exito
-            return render(request, 'clientes_ver.html', {'c': nuevo, 'messages': success})
+            return render(request, 'clientes_ver.html', {'c': nuevo, 'messages': {'success': success}})
 
     # si el tipo de request que se hizo es te tipo GET...            
     else:
@@ -125,6 +131,7 @@ def clientes_nuevo(request):
         form = ClienteForm()      
         return render(request, 'clientes_nuevo.html', {'form': form})
 
+@login_required
 def clientes_editar(request, id):
     '''Funcion para editar un cliente existente.'''
 
@@ -162,7 +169,7 @@ def clientes_editar(request, id):
             success = 'Cliente <i>{cliente}</i> editado con éxito'.format(cliente=cliente.nombre)
 
             # se renderea el perfil del cliente editado, junto al mensaje de exito
-            return render(request, 'clientes_ver.html', {'c': cliente, 'messages': success})
+            return render(request, 'clientes_ver.html', {'c': cliente, 'messages': {'success': success}})
 
     # si el request es de tipo GET...            
     else:
@@ -173,6 +180,7 @@ def clientes_editar(request, id):
         # rendereamos dicho formulario con la tempalte `clientes_editar.html`
         return render(request, 'clientes_editar.html', {'form': form, 'c': cliente})
 
+@login_required
 def clientes_borrar(request, id):
     '''Funcion para borrar un cliente a partir de su ID.'''
 
@@ -194,6 +202,7 @@ def clientes_borrar(request, id):
     else:
         return redirect(clientes_ver, id=id)
 
+@login_required
 def clientes_mapa(request):
     '''Generar un mapa que muestre a todos los clientes como un punto en la ciudad.'''
 
@@ -215,6 +224,7 @@ def clientes_mapa(request):
     # mostramos el mapa en la url `/clientes/mapa/` usando la template `clientes_mapa.html`
     return render(request, 'clientes_mapa.html', {'map_url': map_url, 'clientes_length': len(clientes)})
 
+@login_required
 def choferes_ver(request):
     '''Funcion para mostrar los choferes registrados y toda su informacion.'''
 
@@ -224,6 +234,7 @@ def choferes_ver(request):
     # rendereamos la template
     return render(request, 'choferes.html', {'choferes': choferes})
 
+@login_required
 def chofer_nuevo(request):
     '''Funcion para registrar un nuevo chofer en el sistema.'''
 
@@ -250,7 +261,7 @@ def chofer_nuevo(request):
 
             # obtenemos todos los choferes y los mostramos
             choferes = Chofer.objects.all()
-            return render(request, 'choferes.html', {'choferes': choferes, 'messages': success})
+            return render(request, 'choferes.html', {'choferes': choferes, 'messages': {'success': success}})
 
     # si la request es tipo GET...            
     else:
@@ -259,8 +270,7 @@ def chofer_nuevo(request):
         form = ChoferForm()
         return render(request, 'chofer_nuevo.html', {'form': form})
 
-
-
+@login_required
 def chofer_editar(request, id):
     '''Funcion para editar un chofer existente.'''
 
@@ -286,7 +296,7 @@ def chofer_editar(request, id):
 
             # posteriormente consultamos la lista de choferes y la mostramos 
             choferes = Chofer.objects.all()
-            return render(request, 'choferes.html', {'choferes': choferes, 'messages': success})
+            return render(request, 'choferes.html', {'choferes': choferes, 'messages': {'success': success}})
 
     # si la request es tipo GET...            
     else:
@@ -295,6 +305,7 @@ def chofer_editar(request, id):
         form = ChoferForm(initial=chofer.__dict__)
         return render(request, 'chofer_editar.html', {'form': form, 'c': chofer})
 
+@login_required
 def chofer_borrar(request, id):
     '''Funcion para borrar un chofer a partir de su ID.'''
 
