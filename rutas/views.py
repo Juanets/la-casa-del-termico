@@ -98,8 +98,8 @@ def generar_ruta(request):
         iframe_url = (
                         'https://www.google.com/maps/embed/v1/directions?'
                         'key=AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo'
-                        '&origin=la+casa+del+termico'
-                        '&destination=la+casa+del+termico'
+                        '&origin=29.124909,-110.964523'
+                        '&destination=29.124909,-110.964523'
                         '&waypoints={wp}'.format(wp='|'.join(final_coordinates))
                     )
 
