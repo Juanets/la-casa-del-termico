@@ -22,5 +22,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('', include('crud.urls')),
     path('', include('rutas.urls')),
+    path('accounts/', include('allauth.urls')),    
     path('ayuda/', views.ayuda, name='ayuda'),
 ]
