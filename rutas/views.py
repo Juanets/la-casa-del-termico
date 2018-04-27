@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.template.loader import get_template 
+from django.contrib.auth.decorators import login_required
 
 from watson import search as watson
 import pdfkit
@@ -12,6 +13,7 @@ from crud.models import Cliente, Chofer
 from rutas.models import Reporte, DeliveringOrder
 from .route_helper_functions import *
 
+@login_required
 def generar_ruta(request):
     '''Funcion para generar ruta optima usando la API de Google Maps.'''
     if request.method == 'POST':
@@ -113,7 +115,7 @@ def generar_ruta(request):
                                                     'fecha': datetime.datetime.now()
                                                 }
                                             )
-
+@login_required
 def escoger_clientes(request):
     '''Funcion para que el usuario escoja los clientes de la ruta.'''
 
@@ -123,7 +125,7 @@ def escoger_clientes(request):
     # renderear la seccion de escoger clientes para ruta
     return render(request, 'rutas_escoger_clientes.html', {'c':c, 'range': range(1, 24)})
 
-
+@login_required
 def guardar_ruta(request):
     '''Funcion para guardar ruta en la base de datos.'''
     # si el request es POST
@@ -157,7 +159,7 @@ def guardar_ruta(request):
         # una vez guardada la ruta, mostrar el reporte en una nueva pestaña
         return redirect(reporte_ver, id=r.id)
 
-
+@login_required
 def reportes_lista(request):
     '''Funcion para mostrar una tabla de todos los reportes guardados.'''
 
@@ -179,12 +181,14 @@ def reportes_lista(request):
     # renderear la lista de reportes
     return render(request, 'reportes_lista.html', {'reportes': p.get_page(page), 'paginator': p, 'page_range': page_range})
 
+@login_required
 def reporte_buscar_handler(request):
     '''Funcion para obtener el termino de busqueda y redireccionar a la busqueda.'''    
     query = request.GET.get('query')
     
     return redirect(reporte_buscar, query=query)
 
+@login_required
 def reporte_buscar(request, query):
     '''Funcion para filtrar reportes por chofer, tiempo, fecha o distancia.'''
 
@@ -207,6 +211,7 @@ def reporte_buscar(request, query):
     # finalmente mostramos los resultados al usuario
     return render(request, 'reportes_lista.html', {'reportes': p.get_page(page), 'paginator': p, 'page_range': page_range, 'query': query})
 
+@login_required
 def reporte_ver(request, id):
     '''Funcion para ver un reporte en especifico.'''
 
@@ -218,6 +223,7 @@ def reporte_ver(request, id):
 
     return render(request, 'reportes_ver.html', {'reporte': reporte, 'clientes': clientes})
 
+@login_required
 def reportes_borrar(request, id):
     '''Funcion para borrar un reporte.'''
 
@@ -234,6 +240,7 @@ def reportes_borrar(request, id):
     else:
         return redirect(reporte_ver, id=id)
 
+@login_required
 def reportes_chofer(request, id):
     '''Funcion para ver la lista de entregas que ha hecho un chofer.'''
 
@@ -265,6 +272,7 @@ def reportes_chofer(request, id):
                                                         }
                                                     )
 
+@login_required
 def reporte_pdf(request, id, fecha):
 
     template = get_template('pdf.html')
