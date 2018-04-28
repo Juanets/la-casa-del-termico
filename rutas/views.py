@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.template.loader import get_template 
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 from watson import search as watson
 import pydf
@@ -288,7 +289,10 @@ def reporte_pdf(request, id, fecha):
 
     html = template.render(context)
 
-    pdf = pydf.generate_pdf(html)
+    if settings.DEBUG:
+        pdf = pdfkit.from_string(html, False)
+    else:
+        pdf = pydf.generate_pdf(html)
 
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'filename="somefilename.pdf"'
