@@ -294,7 +294,8 @@ def reporte_pdf(request, id, fecha):
     else:
         pdf = pydf.generate_pdf(html)
 
+    filename = 'Reporte {id} - {fecha}'.format(id=id, fecha=r.fecha_str)
     response = HttpResponse(pdf, content_type='application/pdf')
-    response['Content-Disposition'] = 'filename="somefilename.pdf"'
+    response['Content-Disposition'] = 'filename="{name}.pdf"'.format(name=filename)
 
     return response
