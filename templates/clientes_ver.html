@@ -84,7 +84,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                <form action="/clientes/borrar/{{ c.id }}/" method="POST">
+                <form action="/clientes/{{ c.id }}/borrar/" method="POST">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-outline-danger">Borrar</button>                
                 </form>
