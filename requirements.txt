@@ -12,6 +12,7 @@ django-timedeltafield==0.7.10
 django-watson==1.5.2
 django-widget-tweaks==1.4.2
 googlemaps==2.5.1
+gunicorn==19.7.1
 html5lib==1.0b10
 httplib2==0.11.3
 idna==2.6
