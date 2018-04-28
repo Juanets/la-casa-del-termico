@@ -1,9 +1,11 @@
 from crud.models import Cliente, Chofer
 from crud.forms import ClienteForm, ChoferForm
-from django.contrib.auth.decorators import login_required
 
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
+
 from watson import search as watson
 from rutas.route_helper_functions import calc_page_range
 
@@ -215,10 +217,10 @@ def clientes_mapa(request):
     # URL del mapa con todos sus parametros
     map_url = (
                 'https://maps.googleapis.com/maps/api/staticmap?size=640x640'
-                '&key=AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo'
+                '&key={key}'
                 '&center=29.082987,-110.979481&zoom=12'
                 '&maptype=roadmap&markers=size:tiny|'
-                '{c}'.format(c='&markers=size:tiny|'.join(clientes_coord))
+                '{c}'.format(c='&markers=size:tiny|'.join(clientes_coord), key=settings.MAPS_API_KEY)
     )
 
     # mostramos el mapa en la url `/clientes/mapa/` usando la template `clientes_mapa.html`

@@ -101,10 +101,10 @@ def generar_ruta(request):
         # generar URL para el mapa en HTML
         iframe_url = (
                         'https://www.google.com/maps/embed/v1/directions?'
-                        'key=AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo'
+                        'key={key}'
                         '&origin=29.124909,-110.964523'
                         '&destination=29.124909,-110.964523'
-                        '&waypoints={wp}'.format(wp='|'.join(final_coordinates))
+                        '&waypoints={wp}'.format(wp='|'.join(final_coordinates), key=settings.MAPS_API_KEY)
                     )
 
         # obtener lista de choferes existentes

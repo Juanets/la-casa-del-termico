@@ -149,6 +149,10 @@ SITE_ID = 1
 
 ACCOUNT_LOGOUT_ON_GET = True
 
-# Configure Django App for Heroku.
+# Configure Django App for Heroku
+
 import django_heroku
 django_heroku.settings(locals())
+
+# Google Maps API Keys
+MAPS_API_KEY = config('MAPS_API_KEY')

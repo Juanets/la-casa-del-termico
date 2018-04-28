@@ -2,11 +2,12 @@ import datetime
 import time
 
 from django.db.models import Case, When
+from django.conf import settings
 from crud.models import Cliente
 import googlemaps
 
 # inicializar API de Maps
-gmaps = googlemaps.Client(key='AIzaSyCqwRVeYfYRGF8qsROpKoCyYDWqmUJDGHo')
+gmaps = googlemaps.Client(key=settings.MAPS_API_KEY)
 
 # traducciones de meses
 months = {
