@@ -19,7 +19,7 @@
                 <div class="col mb-3">
                     <ul class="list-group text-center">
                         <button type="button" class="lead list-group-item list-group-item-action">
-                            ⏱ ️{{ route.duration }}
+                            <i class="far fa-clock"></i> ️{{ route.duration }}
                             <input type="hidden" value="{{ route.duration }}" name="duracion" />
                         </button>
                     </ul>
@@ -27,7 +27,7 @@
                 <div class="col mb-3">
                     <ul class="list-group text-center">
                         <button type="button" class="lead list-group-item list-group-item-action">
-                            🚘 {{ route.distance }}
+                            <i class="fas fa-car"></i> {{ route.distance }}
                             <input type="hidden" value="{{ route.distance }}" name="distancia" />
                         </button>
                     </ul>
@@ -36,7 +36,7 @@
 
             <ul class="list-group">
                 <a href="#clientList" data-toggle="collapse" class="text-center lead list-group-item list-group-item-action">
-                    👥 {{ clientes|length }} clientes
+                    <i class="fas fa-users"></i> {{ clientes|length }} clientes
                 </a>
                 <div class="collapse" data-toggle="tooltip" data-placement="right" title="Se muestran en el orden en el que se les entregará."
                     id="clientList">
