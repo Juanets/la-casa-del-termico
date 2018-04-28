@@ -1,0 +1,93 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<form action="/rutas/resultado/" method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col" align="center">
+            <h2 class="mb-0">
+                Nueva ruta
+                <small class="text-muted">Escoger clientes</small>
+            </h2>
+            <hr class="col-md-5">
+        </div>        
+    </div>
+
+    {% for i in range %}
+        {% if i < 6 %}<div class="row {{ i }} visible mb-2">{% else %}<div class="row {{ i }} mb-2 hide">{% endif %}
+            <div class="input-group col-md-6 offset-md-3">
+                <div class="input-group-prepend ">
+                    <span class="input-group-text waypoint-number" id="selector-number">{{ i }}.</span>
+                </div>
+                <select class="selectpicker form-control" data-live-search="true" title="Selecionar cliente" name='{{ i }}' {% if i == 1 %}required {% endif %}>
+                    {% for cliente in c %}
+                        <option data-tokens="{{ cliente.zona }} {{ cliente.calle }} {{ cliente.colonia }} {{ cliente.cp }} {{ cliente.nombre }}"
+                            value="{{ cliente.id }}">
+                            {{ cliente.id }}. {{ cliente.nombre|title }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <div class="input-group-append" 
+                {% if i == 1 %}data-toggle="tooltip" data-placement="right" title="A los clientes con prioridad se les entregará en el orden en que se introducen."{% endif %}
+                >
+                    <div class="input-group-text no-background">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="prioritize" value="{{ i }}" id="c{{ i }}p">
+                            <label class="custom-control-label" for="c{{ i }}p">Priorizar</label>
+                        </div>
+                    </div>
+                </div>            
+            </div>
+        </div>
+    {% endfor %}    
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6 offset-md-3" align="center">
+            <button type="button" id="add" class="btn btn-outline-success w-100 mt-4 mb-2">Agregar otro</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6 offset-md-3" align="center">
+            <button type="submit" class="btn btn-outline-primary w-100 mt-4 mb-5">Generar ruta</button>
+        </div>            
+    </div>
+
+</form>
+{% endblock %} 
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script>
+        /* script para agregar un nuevo selector para escoger cliente. */
+
+        $('#add').click(function(){
+            // contar el numero de selectores de cliente que hay actualmente.
+            var current_number_of_clients = $('div.visible').length;
+
+            // este sera el numero del nuevo selector de cliente
+            var new_client_number = current_number_of_clients + 1;
+            
+            // hacer visible el siguiente selector
+            $("." + new_client_number).removeClass('hide').addClass('visible');
+            console.log(new_client_number)
+
+            // se pueden seleccionar un maximo de 23 clientes
+            if (new_client_number >= 23){
+                $('#add').addClass('hide');
+            }
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                delay: {
+                    show: 200,
+                    hide:50,
+                }
+                
+            })
+        })
+    </script>    
+{% endblock %}

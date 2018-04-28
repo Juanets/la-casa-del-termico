@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row mb-3">
+        <div class="col m-0">
+            <h2 class="mb-0">
+                <a href="#" class="a-clean">Entregas</a>
+                <a href="#" class="a-clean"><small class="text-muted">{{ chofer.nombre|title }}</small></a>
+            </h2>
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="jumbotron text-center">
+                <h1 class="display-4 ">📄</h1>
+                <h2 class="display-4 ">No hay reportes</h2>            
+                <p class="lead">Este chofer aún no tiene entregas registradas.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

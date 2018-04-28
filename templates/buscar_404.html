@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row mb-3">
+    <div class="col m-0">
+        <h2 class="mb-0">
+            <a href="/{{ section }}/" class="a-clean">{{ section|title }}</a>
+            <small class="text-muted">Buscar</small>
+        </h2>
+    </div>
+    <div class="col-sm-4 offset-sm-2">
+        <form class="form-inline" action="/{{ section }}/buscar_handler/" method="GET">
+            <input class="form-control mr-2" type="search" placeholder="Buscar..." name="query">
+            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        </form>
+    </div>
+</div>  
+<div class="row">
+    <div class="col-sm-12">
+        <div class="jumbotron text-center">
+            <h1 class="display-4 ">🔍</h1>
+            <h2 class="display-4 ">Sin resultados</h2>            
+            <p class="lead">No encontramos resultado para <strong>"{{ query }}"</strong> :(</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

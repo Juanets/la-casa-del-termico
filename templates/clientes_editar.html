@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="row mb-3">
+    <div class="col m-0">
+        <h2 class="mb-0">
+            Clientes
+            <small class="text-muted">Editar</small>
+        </h2>
+    </div>
+</div>
+
+<div class="row">
+    <form action="/clientes/{{ c.id }}/editar/" method="POST">
+        {% csrf_token %}        
+        <div class="form-row">
+            <h5 class="text-muted mt-2 ml-1">Información de contacto</h5>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Nombre</span>
+            </div>
+            {{ form.nombre|add_class:"form-control" }}
+        </div>
+        <div class="form-row">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Teléfono</span>
+                    </div>
+                    {% render_field form.telefono|add_class:"form-control" placeholder="Opcional" %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Correo&nbsp;&nbsp;</span>
+                    </div>
+                    {% render_field form.correo|add_class:"form-control"  placeholder="Opcional" %}
+                </div>
+            </div>
+        </div>
+         
+        <div class="form-row">
+            <h5 class="text-muted mt-2 ml-1">Dirección</h5>
+        </div>
+        <div class="form-row">
+            <div class="col-sm-12 col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Colonia&nbsp;</span>
+                    </div>
+                    {{ form.colonia|add_class:"form-control" }}
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Calle</span>
+                    </div>
+                    {{ form.calle|add_class:"form-control" }}
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Número interior</span>
+                    </div>
+                    {% render_field form.numero_int|add_class:"form-control" placeholder="Opcional" %}
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Número exterior</span>
+                    </div>
+                    {% render_field form.numero_ext|add_class:"form-control" placeholder="Opcional" %}
+                </div>
+            </div>            
+            <div class="col-sm-12 col-md-4">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">C.P.</span>
+                    </div>
+                    {% render_field form.cp|add_class:"form-control" placeholder="Opcional" %}
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <h5 class="text-muted mt-2 ml-1">Ubicación
+                <small>
+                    <a href="#" class="btn-link" data-toggle="modal" data-target="#coordinatesModal">
+                        Ayuda
+                    </a>
+                </small>
+            </h5>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Latitud&nbsp;&nbsp;</span>
+                    </div>
+                    {{ form.lat|add_class:"form-control" }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text pr-2">Longitud</span>
+                    </div>
+                    {{ form.lng|add_class:"form-control" }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text pr-2">Zona</span>
+                    </div>
+                    {{ form.zona|add_class:"form-control" }}
+                </div>
+            </div>
+        </div>
+        {{ form.non_field_errors }}
+        <button type="submit" class="btn btn-outline-success w-100">Guardar</button>
+    </form> 
+
+</div>
+<div class="modal fade" id="coordinatesModal" tabindex="-1" role="dialog" aria-labelledby="coordinatesModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title " id="exampleModalLabel"><strong>Coordenadas del cliente</strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Utilizamos las coordenadas de ubicación del cliente para mayor exactitud,
+                ya que en ocaciones <i>Google Maps</i> no encuentra la dirección en forma de texto.
+                <br><br>
+                <strong>Ejemplo:</strong> <br>
+                <i>Latitud:</i> 29.0672479 <br>
+                <i>Longitud:</i> -110.960755
+                <br><br>
+                Para saber cómo obtener las coordenadas, haz click <a target="_blank" href="https://support.google.com/maps/answer/18539?hl=es">aquí</a>.
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-outline-primary">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
