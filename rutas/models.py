@@ -11,7 +11,7 @@ class Reporte(models.Model):
     chofer_nombre = models.CharField(max_length=100)
     distancia = models.CharField(max_length=10)
     duracion = models.CharField(max_length=30)
-    mapa_url = models.CharField(max_length=500)
+    mapa_url = models.CharField(max_length=4000)
 
 
 class DeliveringOrder(models.Model):
