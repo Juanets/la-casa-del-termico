@@ -8,39 +8,61 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col text-center mb-3">
-                <img src="https://i.imgur.com/bFeVNVY.png" width=300>
+            <div class="col text-right mb-3">
+                <img src="https://i.imgur.com/bFeVNVY.png" width=200>
             </div>
         </div>
-
+        <p class="lead">Reporte <strong>{{ id }}</strong></p>
+        <p class="lead">{{ fecha_str }}</p>
+        <hr>
+        <p class="lead">Datos generales de la ruta</p>
         <div class="row">
             <div class="col">
-                <table class="table table-sm text-left">
+                <table class="table table-bordered text-left">
                     <thead>
                         <tr>
-                            <th scope="col">Chofer</th>
-                            <th scope="col">Duración</th>
-                            <th scope="col">Distancia</th>
+                            <th class="p-2" scope="col">Chofer</th>
+                            <th class="p-2" scope="col">Duración</th>
+                            <th class="p-2" scope="col">Distancia</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ chofer|title }}</td>
-                            <td>{{ duracion }}</td>
-                            <td>{{ distancia }}</td>
+                            <td class="p-2"><small>{{ chofer|title }}</small></td>
+                            <td class="p-2"><small>{{ duracion }}</small></td>
+                            <td class="p-2"><small>{{ distancia }}</small></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
+        <br>
+        <p class="lead">Clientes (en orden de entrega)</small></p>
         <div class="row">
             <div class="col">
-                <ul>
-                    {% for c in clientes %}
-                    <li>{{ c.nombre|title }}</li>
-                    {% endfor %}
-                </ul>
+                <table class="table table-bordered text-left">
+                    <thead>
+                        <tr>
+                            <th class="p-2" scope="col">Nombre</th>
+                            <th class="p-2" scope="col">Dirección</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in clientes %}
+                            <tr>
+                                <td class="p-2"><small>{{ c.nombre|title }}</small></td>
+                                <td class="p-2">
+                                    <small>
+                                        {{ c.calle|title }} 
+                                        {% if c.numero_ext %}num. {{ c.numero_ext }}, {% endif %} 
+                                        {% if c.numero_int %}int. {{ c.numero_int }}, {% endif %}
+                                        {{ c.colonia|title }}
+                                    </small>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>                
             </div>
         </div>
     </div>
