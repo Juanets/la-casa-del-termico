@@ -5,7 +5,7 @@ from django.template.loader import get_template
 from django.contrib.auth.decorators import login_required
 
 from watson import search as watson
-from pywkher import generate_pdf
+import pypdf
 import pdfkit
 import datetime
 import time
@@ -288,16 +288,7 @@ def reporte_pdf(request, id, fecha):
 
     html = template.render(context)
 
-    options = {
-        'margin-top': '20mm',
-        'margin-right': '20mm',
-        'margin-bottom': '20mm',
-        'margin-left': '20mm',
-        'javascript-delay': 1000,
-
-    }
-
-    pdf = generate_pdf(html=html)
+    pdf = pypdf.generate_pdf(html)
 
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'filename="somefilename.pdf"'
