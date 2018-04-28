@@ -53,15 +53,15 @@
 
   /* icons */
   
-  .fa-edit {
+  .fa-edit, .fa-users {
     color: #66BB6A;
   }
   
-  .fa-trash-alt {
+  .fa-trash-alt, .fa-car {
     color: #E53935;
   }
   
-  .fa-user {
+  .fa-user, .fa-file-alt, .fa-id-card{
     color: #007bff;
   }
   
@@ -69,6 +69,9 @@
     color: #FB8C00;
   }
   
+  .fa-map-marker-alt {
+    color: #dc483c;
+  }
   /* bootstrap-select */
   
   .bootstrap-select.form-control:not([class*="col-"]) {
