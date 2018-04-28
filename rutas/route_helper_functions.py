@@ -34,8 +34,8 @@ def calculate_route(client_list, optimize=False):
                                 mode='driving',
                                 language='es',
                                 units='metric',
-                                origin='la casa del termico',
-                                destination='la casa del termico',
+                                origin='29.124909,-110.964523',
+                                destination='29.124909,-110.964523',
                                 optimize_waypoints=optimize,
                                 waypoints=coordinates,
                         )
