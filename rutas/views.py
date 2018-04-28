@@ -5,6 +5,7 @@ from django.template.loader import get_template
 from django.contrib.auth.decorators import login_required
 
 from watson import search as watson
+from pywkher import generate_pdf
 import pdfkit
 import datetime
 import time
@@ -296,7 +297,7 @@ def reporte_pdf(request, id, fecha):
 
     }
 
-    pdf = pdfkit.from_string(html, False, options=options)
+    pdf = generate_pdf(html=html)
 
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'filename="somefilename.pdf"'
