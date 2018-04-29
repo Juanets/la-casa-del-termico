@@ -3,6 +3,9 @@ import time
 
 from django.db.models import Case, When
 from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template 
+
 from crud.models import Cliente
 import googlemaps
 
@@ -139,3 +142,32 @@ def calc_page_range(page, num_pages):
 
     # regresamos el rango de paginas
     return page_range
+
+def enviar_ruta_a_chofer(chofer, route_str):
+    '''Enviar correo al chofer con enlace de la ruta, para que pueda verla él mismo.'''
+
+    # coordenadas de la bodega de la casa del termico  
+    base = '/29.124909,-110.964523/'
+
+    # editar la URL de la ruta que se guardó en la base de datos.
+    # la que se guarda en base de datos no la puede ver directamente el chofer,
+    # hay que reemplazar partes de la URL para que la ruta sea publica
+    waypoints = base + route_str[165:].replace('|', '/') + base
+    route_url = 'https://www.google.com/maps/dir' + waypoints
+
+    # contexto para la template
+    context = {
+        'url': route_url,
+        'nombre': chofer.nombre
+    }
+
+    # asunto
+    subject = 'Ruta de entrega - La Casa del Térmico'
+
+    # renderear la template html (este es el mensaje que se enviara)
+    content = get_template('rutas_email.html').render(context)
+
+    # enviar mensaje por correo, en forma de html
+    msg = EmailMultiAlternatives(subject, content, settings.EMAIL_HOST_USER, [chofer.correo])
+    msg.content_subtype = 'html'
+    msg.send()

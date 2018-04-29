@@ -158,8 +158,18 @@ def guardar_ruta(request):
         
         r.save()
 
-        # una vez guardada la ruta, mostrar el reporte en una nueva pestaña
-        return redirect(reporte_ver, id=r.id)
+        # mandar correo con el enlace de la ruta al chofer seleccionado
+        try:
+            enviar_ruta_a_chofer(chofer, mapa_url)
+            messages = {'success': '<strong>¡Listo!</strong> Se ha enviado la ruta al chofer asignado a través de su correo electrónico.'}
+        except:
+            messages = {'danger': '<strong>Error</strong>. No se pudo enviar la ruta al correo electrónico del chofer.'}         
+        
+        # estos son los clientes (objetos) involucrados en la ruta
+        clientes = r.clientes.all()
+
+        # una vez guardada la ruta, mostrar el reporte en una nueva pestaña        
+        return render(request, 'reportes_ver.html', {'reporte': r, 'clientes': clientes, 'messages':messages})
 
 @login_required
 def reportes_lista(request):
@@ -287,15 +297,35 @@ def reporte_pdf(request, id, fecha):
     context['clientes'] = r.clientes.all()
     context['chofer'] = r.chofer.nombre
 
+    # renderear la template con el contexto
     html = template.render(context)
 
+    # usar pdfkit si se corre localmente, 
+    # pydf si esta en produccion (Heroku)
     if settings.DEBUG:
         pdf = pdfkit.from_string(html, False)
     else:
         pdf = pydf.generate_pdf(html)
 
+    # nombre y datos del archivo y la respuesta http
     filename = 'Reporte {id} - {fecha}'.format(id=id, fecha=r.fecha_str)
     response = HttpResponse(pdf, content_type='application/pdf')
     response['Content-Disposition'] = 'filename="{name}.pdf"'.format(name=filename)
 
     return response
+
+def enviar_ruta_correo(request, id):
+    r = Reporte.objects.get(id=id)
+    
+    # mandar correo con el enlace de la ruta al chofer seleccionado
+    try:
+        enviar_ruta_a_chofer(r.chofer, r.mapa_url)
+        messages = {'success': '<strong>¡Listo!</strong> Se ha enviado la ruta al chofer asignado a través de su correo electrónico.'}
+    except:
+        messages = {'danger': '<strong>Error</strong>. No se pudo enviar la ruta al correo electrónico del chofer.'}         
+    
+    # estos son los clientes (objetos) involucrados en la ruta
+    clientes = r.clientes.all()
+
+    # una vez guardada la ruta, mostrar el reporte en una nueva pestaña        
+    return render(request, 'reportes_ver.html', {'reporte': r, 'clientes': clientes, 'messages':messages})    
