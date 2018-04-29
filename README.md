@@ -9,9 +9,13 @@ Sistema de generación de rutas óptimas para La Casa del Térmico.
 
 ## TO-DO
 
-#### 1. ~~Choferes~~
+#### 1. ~~CRUD (Clientes/Choferes)~~
 #### 2. ~~Mapa de clientes~~
 #### 3. ~~Generar la ruta~~
 #### 4. Reportes
-* Darle formato bonito y mostrar la mayor cantidad de información posible
-  * Investigar cómo guardar el mapa mostrado (`iframe`) como imágen y pegarlo en el PDF
+ * Investigar cómo guardar el mapa mostrado (`iframe`) como imágen y pegarlo en el PDF
+#### 5. Otros
+ * Pedir las API keys de Google Maps con la cuenta de La Casa del Térmico
+ * Hacer deploy en su servidor local o en un servidor externo (como Heroku). El punto es no tenerlo corriendo dentro de mi Heroku 👀
+ * Crear superuser para el usuario final
+ * Mandar ruta al chofer por correo (https://myaccount.google.com/lesssecureapps)
