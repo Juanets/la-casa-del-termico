@@ -13,4 +13,5 @@ urlpatterns = [
     path('reportes/', views.reportes_lista, name='reportes_lista'), # ver todos los reportes
     path('reportes/borrar/<int:id>/', views.reportes_borrar, name='reportes_borrar'), # borrar un reporte
     path('chofer/<int:id>/entregas/', views.reportes_chofer, name='reportes_chofer'), # ver las entregas (reportes) de un chofer
+    path('reportes/<int:id>/enviar/', views.enviar_ruta_correo) # enviar ruta al correo del chofer
 ]
