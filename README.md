@@ -16,6 +16,5 @@ Sistema de generación de rutas óptimas para La Casa del Térmico.
  * Investigar cómo guardar el mapa mostrado (`iframe`) como imágen y pegarlo en el PDF
 #### 5. Otros
  * Pedir las API keys de Google Maps con la cuenta de La Casa del Térmico
- * Hacer deploy en su servidor local o en un servidor externo (como Heroku). El punto es no tenerlo corriendo dentro de mi Heroku 👀
+ * Deploy en su servidor local o en un servidor externo. El punto es no tenerlo corriendo dentro de mi Heroku 👀
  * Crear superuser para el usuario final
- * Mandar ruta al chofer por correo (https://myaccount.google.com/lesssecureapps)
