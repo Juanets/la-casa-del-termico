@@ -6,7 +6,7 @@ class Cliente(models.Model):
     '''Campos del cliente.'''
     nombre = models.CharField(max_length=100)
     correo = models.EmailField(blank=True)
-    telefono = models.BigIntegerField(blank=True)
+    telefono = models.CharField(max_length=50, blank=True)
     colonia = models.CharField(max_length=100)
     calle = models.CharField(max_length=100)
     cp = models.IntegerField(blank=True)
