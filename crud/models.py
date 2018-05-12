@@ -9,7 +9,7 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=50, blank=True)
     colonia = models.CharField(max_length=100)
     calle = models.CharField(max_length=100)
-    cp = models.IntegerField(blank=True)
+    cp = models.CharField(max_length=10, blank=True)
     numero_int = models.CharField(blank=True, max_length=20)
     numero_ext = models.CharField(blank=True, max_length=20)
     lat = models.DecimalField(max_digits=25, decimal_places=20)
