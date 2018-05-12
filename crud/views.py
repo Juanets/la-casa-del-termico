@@ -212,7 +212,7 @@ def clientes_mapa(request):
     clientes = Cliente.objects.all()
 
     # sacamos las coordenadas (solo de 200 clientes, debido a limitaciones de google maps)
-    clientes_coord =  ['{lat},{lng}'.format(lat=c.lat[:6], lng=c.lng[:10]) for c in clientes[:200]]
+    clientes_coord =  ['{lat},{lng}'.format(lat=str(c.lat)[:6], lng=str(c.lng)[:10]) for c in clientes[:200]]
 
     # URL del mapa con todos sus parametros
     map_url = (
