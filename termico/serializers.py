@@ -16,6 +16,7 @@ class ChoferSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ReporteSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.ReadOnlyField()
     class Meta:
         model = Reporte
         fields = '__all__'
