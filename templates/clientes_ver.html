@@ -3,7 +3,7 @@
 <div class="row mb-3">
     <div class="col m-0">
         <h2 class="mb-0">
-            Clientes
+            👥 Clientes
             <small class="text-muted">Perfil</small>
         </h2>
     </div>
@@ -26,10 +26,10 @@
         <h5 class="card-title">
             <strong>{{ c.nombre|title }}</strong>&emsp;
             <a class="a-clean" href="/clientes/{{ c.id }}/editar/">
-                <i class="fas fa-edit"></i>
+                ✏️
             </a>&emsp;
             <a  class="a-clean" href="#" data-toggle="modal" data-target="#modal_borrar">
-                <i class="far fa-trash-alt"></i>
+                ❌
             </a>
         </h5>
         <p class="card-text">
@@ -65,7 +65,7 @@
             <strong>Correo: </strong>{{ c.correo }}
         </p>
         {% endif %}
-        <a target="_blank" href="https://www.google.com/maps?q={{ c.lat }},{{ c.lng }}" class="btn btn-outline-primary">Ver en Maps</a>
+        <a target="_blank" href="https://www.google.com/maps?q={{ c.lat }},{{ c.lng }}" class="btn btn-outline-primary">🗺️ Ver en Maps</a>
     </div>
 </div>
 

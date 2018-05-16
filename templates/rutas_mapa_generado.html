@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-8">
             <h2 class="">
-                Nueva ruta
+                🗺️ Nueva ruta
                 <small class="text-muted">Resultado</small>
             </h2>
             <iframe src="{{ iframe_url }}" class="w-100" height="500px" frameborder="0" style="border:0" allowfullscreen></iframe>
@@ -19,7 +19,7 @@
                 <div class="col mb-3">
                     <ul class="list-group text-center">
                         <button type="button" class="lead list-group-item list-group-item-action">
-                            <i class="far fa-clock"></i> ️{{ route.duration }}
+                            ⏱️ ️{{ route.duration }}
                             <input type="hidden" value="{{ route.duration }}" name="duracion" />
                         </button>
                     </ul>
@@ -27,7 +27,7 @@
                 <div class="col mb-3">
                     <ul class="list-group text-center">
                         <button type="button" class="lead list-group-item list-group-item-action">
-                            <i class="fas fa-car"></i> {{ route.distance }}
+                            🚘 {{ route.distance }}
                             <input type="hidden" value="{{ route.distance }}" name="distancia" />
                         </button>
                     </ul>
@@ -36,7 +36,7 @@
 
             <ul class="list-group">
                 <a href="#clientList" data-toggle="collapse" class="text-center lead list-group-item list-group-item-action">
-                    <i class="fas fa-users"></i> {{ clientes|length }} clientes
+                    👥 {{ clientes|length }} clientes
                 </a>
                 <div class="collapse" data-toggle="tooltip" data-placement="right" title="Se muestran en el orden en el que se les entregará."
                     id="clientList">
@@ -50,7 +50,7 @@
             <hr class="mb-0">
 
             <h2>
-                <small class="text-muted">Asignar chofer</small>
+                <small class="text-muted">👨‍✈️ Asignar chofer</small>
             </h2>
             {% for chofer in choferes %}
                 <div class="custom-control custom-radio">

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-8">
             <h2 class="">
-                Reporte
+                📋 Reporte
                 <small class="text-muted">{{ reporte.fecha_str }}</small>
             </h2>
             <iframe src="{{ reporte.mapa_url }}" class="w-100" height="500px" frameborder="0" style="border:0" allowfullscreen></iframe>
@@ -25,14 +25,14 @@
                 <div class="col mb-3">
                     <ul class="list-group text-center">
                         <button type="button" class="lead list-group-item list-group-item-action">
-                            <i class="far fa-clock"></i>&nbsp;{{ reporte.duracion }}
+                            ⏱️ {{ reporte.duracion }}
                         </button>
                     </ul>
                 </div>
                 <div class="col mb-3">
                     <ul class="list-group text-center">
                         <button type="button" class="lead list-group-item list-group-item-action">
-                            <i class="fas fa-car"></i>&nbsp;{{ reporte.distancia }}
+                            🚘 {{ reporte.distancia }}
                         </button>
                     </ul>
                 </div>
@@ -42,7 +42,7 @@
                 <div class="col">
                     <ul class="list-group text-center">
                         <button type="button" class="lead list-group-item list-group-item-action">
-                            <i class="fas fa-id-card"></i>&nbsp;{{ reporte.chofer.nombre }}
+                            👨‍✈️ {{ reporte.chofer.nombre }}
                         </button>
                     </ul>
                 </div>
@@ -50,7 +50,7 @@
 
             <ul class="list-group mb-3">
                 <a href="#clientList" data-toggle="collapse" class="text-center lead list-group-item list-group-item-action">
-                    <i class="fas fa-users"></i>&nbsp;{{ clientes|length }} clientes
+                    👥 {{ clientes|length }} clientes
                 </a>
                 <div class="collapse" data-toggle="tooltip" data-placement="right" title="Se muestran en el orden en el que se les entregará."
                     id="clientList">
@@ -63,14 +63,14 @@
             </ul>
             <hr>
             <button type="button" data-toggle="modal" data-target="#modal_borrar" class="btn btn-outline-danger w-100 mb-3">
-                Borrar reporte
+                ❌ Borrar reporte
             </button>
             <button type="button" data-toggle="modal" data-target="#modal_correo" class="btn btn-outline-success w-100 mb-3">
-                Notificar al chofer asignado
+                📧 Notificar al chofer asignado
             </button>            
             {% with fecha=reporte.fecha|date:"d.m.y" %}<a target="_blank" href="{% url 'reporte_pdf' reporte.id fecha %}">{% endwith %}
                 <button type="button" class="btn btn-outline-primary w-100 mb-3">
-                    Generar PDF
+                    📋 Generar PDF
                 </button>
             </a>
         </div>

@@ -3,7 +3,7 @@
 <div class="row mb-3">
     <div class="col m-0">
         <h2 class="mb-0">
-            <a href="/reportes/" class="a-clean">Reportes</a>
+            <a href="/reportes/" class="a-clean">📋 Reportes</a>
             <small class="text-muted">Buscar</small>
         </h2>
     </div>
@@ -31,13 +31,13 @@
             {% for r in reportes %}
             <tr>
                 <th scope="row">{{ r.id }}</th>
-                <td>{{ r.chofer.nombre|title|truncatechars:25 }}</td>
-                <td>{{ r.duracion }}</td>
-                <td>{{ r.distancia }}</td>
-                <td>{{ r.fecha_str }}</td>
+                <td>👨‍✈️ {{ r.chofer.nombre|title|truncatechars:25 }}</td>
+                <td>⏱️ {{ r.duracion }}</td>
+                <td>🚘 {{ r.distancia }}</td>
+                <td>📅 {{ r.fecha_str }}</td>
                 <td>
-                    <a href="/reportes/{{ r.id }}"><i class="far fa-file-alt"></i></a>&emsp;
-                    <a  href="#" data-toggle="modal" data-target="#modal_borrar_{{ r.id }}"><i class="far fa-trash-alt"></i></a>
+                    <a href="/reportes/{{ r.id }}">🔍</a>&emsp;
+                    <a  href="#" data-toggle="modal" data-target="#modal_borrar_{{ r.id }}">❌</a>
                 </td>
             </tr>
 
