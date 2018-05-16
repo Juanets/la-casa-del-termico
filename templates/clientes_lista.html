@@ -40,10 +40,10 @@
                 <td>{{ c.telefono|truncatechars:10 }}</td>
                 <td>{{ c.correo }}</td>
                 <td>
-                    <a href="/clientes/{{ c.id }}">🔍</a>&emsp;
-                    <a href="https://www.google.com/maps?q={{ c.lat }},{{ c.lng }}">🗺️</a>&emsp;
-                    <a href="/clientes/{{ c.id }}/editar/">✏️</a>&emsp;
-                    <a  href="#" data-toggle="modal" data-target="#modal_borrar_{{ c.id }}">❌</a>
+                    <a href="/clientes/{{ c.id }}" class="a-clean">🔍</a>&emsp;
+                    <a href="https://www.google.com/maps?q={{ c.lat }},{{ c.lng }}" class="a-clean" target="_blank">🗺️</a>&emsp;
+                    <a href="/clientes/{{ c.id }}/editar/" class="a-clean">✏️</a>&emsp;
+                    <a href="#" data-toggle="modal" data-target="#modal_borrar_{{ c.id }}" class="a-clean">❌</a>
                 </td>
             </tr>
 

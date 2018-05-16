@@ -31,10 +31,10 @@
                     <h5 class="card-title row">
                         <div class="col-sm-10 lead"><strong>{{ c.nombre|title }}</strong></div>
                         <div class="col-sm-2"><small class="lead">
-                                <a tabindex="0" class="settings btn-link p-0" role="button" 
+                                <a tabindex="0" class="settings a-clean btn-link p-0" role="button" 
                                 data-toggle="popover" data-trigger="focus" html=true data-placement="top"
-                                data-content="<a href='/chofer/{{ c.id }}/editar'>✏️</a>&emsp;
-                                <a href='#' data-toggle='modal' data-target='#modal_borrar_{{ c.id }}'>❌</a>">
+                                data-content="<a class='a-clean' href='/chofer/{{ c.id }}/editar'>✏️</a>&emsp;
+                                <a href='#' class='a-clean' data-toggle='modal' data-target='#modal_borrar_{{ c.id }}'>❌</a>">
                                 ⚙️
                                 </a>
                         </small></div>
@@ -42,10 +42,8 @@
                     <hr>
                     <p class="card-text"><strong class="text-muted">📧 Correo: </strong>{{ c.correo }}</p>
                     <p class="card-text"><strong class="text-muted">📞 Teléfono: </strong>{{ c.telefono }}</p>                          
-
                     
-                    <a href="/chofer/{{ c.id }}/entregas/" class="btn btn-outline-primary">🗺️ Ver entregas</a>
-                    
+                    <a href="/chofer/{{ c.id }}/entregas/" class="btn btn-outline-primary">Ver entregas</a>                    
                 </div>
             </div>                
         </div>
